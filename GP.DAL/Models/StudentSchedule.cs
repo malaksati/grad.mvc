@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace GP.DAL.Models
 {
-    public class StudentSchedule : InstructorSchedule
+    public class StudentSchedule : Schedule
     {
         public int Group {  get; set; }
         public int Level { get; set; }
-        [ForeignKey("Department")]
         public virtual int DeptId { get; set; }
-        public Department? Department { get; set; }
+        public Department Department { get; set; }
     }
 }

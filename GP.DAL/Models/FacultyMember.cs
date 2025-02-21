@@ -15,9 +15,11 @@ namespace GP.DAL.Models
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
-        [ForeignKey("Department")]
+        public int WorkingHours { get; set; }
         public int DeptId { get; set; }
-        public virtual Department? Department { get; set; }
+        public Department Department { get; set; }
+        public ICollection<Schedule> InstructorSchedules { get; set; }
+        public ICollection<Schedule> AssistantSchedules { get; set; }
 
     }
 }

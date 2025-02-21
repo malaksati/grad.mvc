@@ -16,8 +16,10 @@ namespace GP.DAL.Models
         public int CreditHour { get; set; }
         public int NoOfSec { get; set; }
         public int NoOfLec { get; set; }
-        [ForeignKey("Department")]
         public int DeptId { get; set; }
-        public virtual Department? Department { get; set; }
+        public Department Department { get; set; }
+        public ICollection<Schedule> Schedules { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; }
+
     }
 }

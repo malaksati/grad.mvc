@@ -13,5 +13,6 @@ namespace GP.DAL.Models
         public string Type { get; set; }
         public string Name { get; set; }
         public bool IsAvailable { get; set; }
+        public ICollection<Schedule> Schedules { get; set; }
     }
 }

@@ -18,17 +18,19 @@ namespace GP.DAL.Models
         [Key]
         public int SSN { get; set; }
         public string Address { get; set; }
+        [Phone]
         public string MobilePhone { get; set; }
+        [Phone]
         public string HomePhone { get; set; }
         public Gender Gender { get; set; }
         public int Level { get; set; }
         public DateTime BirthDate { get; set; }
         public double HighSchoolGrade { get; set; }
-        [ForeignKey("Department")]
         public int DeptId { get; set; }
-        public virtual Department? Department { get; set; }
-
-
+        public Department Department { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; }
+        public int AdvisorId { get; set; }
+        public Advisor Advisor { get; set; }
     }
     public enum Gender { Male, Female }
 }

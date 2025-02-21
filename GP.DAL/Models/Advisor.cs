@@ -8,6 +8,7 @@ namespace GP.DAL.Models
 {
     public class Advisor : Employee
     {
-
+        public ICollection<Student> Students { get; set; }
+        public ICollection<Schedule> Schedules { get; set; }
     }
 }

@@ -12,8 +12,7 @@ namespace GP.DAL.Models
         public int  Id  { get; set; }
         public DateTime CreatedAt { get; set; }= DateTime.Now;
         public string Status { get; set; }
-        [ForeignKey("StudentAffairs")]
-        public int  StudentAffairsId  { get; set; }
+        public int StudentAffairsId  { get; set; }
         public StudentAffairs StudentAffairs { get; set; }
     }
 }

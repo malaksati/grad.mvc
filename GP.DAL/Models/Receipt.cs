@@ -17,14 +17,11 @@ namespace GP.DAL.Models
         public double AmountDue {  get; set; }
         public DateTime DueDate { get; set; }
         public DateTime PaymentDate { get; set; }
-        [ForeignKey("College")]
         public int CollegeId { get; set; }
-        [ForeignKey("FinancialAffairs")]
         public int FinancialAffairsId { get; set; }
-        [ForeignKey("StudentAffairs")]
         public int StudentAffairsId { get; set; }
-        public College? College { get; set; }
-        public FinancialAffairs? FinancialAffairs { get; set; }
-        public StudentAffairs? StudentAffairs { get; set; }
+        public College College { get; set; }
+        public FinancialAffairs FinancialAffairs { get; set; }
+        public StudentAffairs StudentAffairs { get; set; }
     }
 }
