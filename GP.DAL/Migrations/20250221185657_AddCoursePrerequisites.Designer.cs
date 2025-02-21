@@ -4,6 +4,7 @@ using GP.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GP.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250221185657_AddCoursePrerequisites")]
+    partial class AddCoursePrerequisites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,80 +119,6 @@ namespace GP.DAL.Migrations
                     b.HasIndex("DeptId");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            Code = "BS111",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "English Language 1",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS112",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "English Language 2",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS114",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Technical Report Writing",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "CS111",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Introduction to Computer Science",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS151",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Linear Algebra 1",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS152",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Linear Algebra 2",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS153",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Mathematical Analysis 1",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS154",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Mathematical Analysis 2",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        });
                 });
 
             modelBuilder.Entity("GP.DAL.Models.CoursePrerequisite", b =>
@@ -206,23 +134,6 @@ namespace GP.DAL.Migrations
                     b.HasIndex("PrerequisiteCode");
 
                     b.ToTable("CoursePrerequisite");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseCode = "BS112",
-                            PrerequisiteCode = "BS111"
-                        },
-                        new
-                        {
-                            CourseCode = "BS152",
-                            PrerequisiteCode = "BS151"
-                        },
-                        new
-                        {
-                            CourseCode = "BS154",
-                            PrerequisiteCode = "BS153"
-                        });
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Department", b =>

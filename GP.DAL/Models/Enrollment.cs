@@ -16,6 +16,6 @@ namespace GP.DAL.Models
         public string Grade { get; set; }
         public int AcademicYear { get; set; }
         public int Level { get; set; }
-        public string Semester { get; set; }
+        public SemesterType Semester { get; set; }
     }
 }

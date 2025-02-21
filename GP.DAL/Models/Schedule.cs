@@ -11,9 +11,12 @@ namespace GP.DAL.Models
     {
         public int Id { get; set; }
         public string Day { get; set; }
-        public DateTime TimeBegin { get; set; }
-        public DateTime TimeEnd { get; set; }
-        public string Semester { get; set; }
+        [Column(TypeName = "time")] // SQL Server's time type
+        public TimeSpan TimeBegin { get; set; }
+
+        [Column(TypeName = "time")]
+        public TimeSpan TimeEnd { get; set; }
+        public SemesterType Semester { get; set; }
         public int AcademicYear { get; set; }
         public int PlaceId { get; set; }
         public int InstructorId { get; set; }
@@ -26,4 +29,11 @@ namespace GP.DAL.Models
         public FacultyMember Instructor { get; set; }
         public FacultyMember Assistant { get; set; }
     }
+    public enum SemesterType
+    {
+        Spring,
+        Summer,
+        Fall
+    }
+
 }

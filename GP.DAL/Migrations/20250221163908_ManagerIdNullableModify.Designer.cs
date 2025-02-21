@@ -4,6 +4,7 @@ using GP.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GP.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250221163908_ManagerIdNullableModify")]
+    partial class ManagerIdNullableModify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,6 +58,7 @@ namespace GP.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("DeanId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -65,30 +68,9 @@ namespace GP.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DeanId")
-                        .IsUnique()
-                        .HasFilter("[DeanId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Colleges");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DeanId = 1,
-                            Name = "Engineering"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DeanId = 2,
-                            Name = "Computers and Artificial Intelligence"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DeanId = 3,
-                            Name = "Pharmacy"
-                        });
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Course", b =>
@@ -117,112 +99,6 @@ namespace GP.DAL.Migrations
                     b.HasIndex("DeptId");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            Code = "BS111",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "English Language 1",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS112",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "English Language 2",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS114",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Technical Report Writing",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "CS111",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Introduction to Computer Science",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS151",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Linear Algebra 1",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS152",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Linear Algebra 2",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS153",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Mathematical Analysis 1",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        },
-                        new
-                        {
-                            Code = "BS154",
-                            CreditHour = 3,
-                            DeptId = 11,
-                            Name = "Mathematical Analysis 2",
-                            NoOfLec = 2,
-                            NoOfSec = 2
-                        });
-                });
-
-            modelBuilder.Entity("GP.DAL.Models.CoursePrerequisite", b =>
-                {
-                    b.Property<string>("CourseCode")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PrerequisiteCode")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CourseCode", "PrerequisiteCode");
-
-                    b.HasIndex("PrerequisiteCode");
-
-                    b.ToTable("CoursePrerequisite");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseCode = "BS112",
-                            PrerequisiteCode = "BS111"
-                        },
-                        new
-                        {
-                            CourseCode = "BS152",
-                            PrerequisiteCode = "BS151"
-                        },
-                        new
-                        {
-                            CourseCode = "BS154",
-                            PrerequisiteCode = "BS153"
-                        });
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Department", b =>
@@ -237,6 +113,7 @@ namespace GP.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("HeadId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -248,82 +125,9 @@ namespace GP.DAL.Migrations
                     b.HasIndex("CollegeId");
 
                     b.HasIndex("HeadId")
-                        .IsUnique()
-                        .HasFilter("[HeadId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Departments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CollegeId = 2,
-                            HeadId = 4,
-                            Name = "Computer Science"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CollegeId = 2,
-                            HeadId = 6,
-                            Name = "Artificial Intelligence"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CollegeId = 2,
-                            HeadId = 5,
-                            Name = "Information Systems"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CollegeId = 1,
-                            HeadId = 7,
-                            Name = "Electrical Engineering"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CollegeId = 1,
-                            HeadId = 8,
-                            Name = "Mechnical Engineering"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CollegeId = 1,
-                            HeadId = 9,
-                            Name = "Physics and Mathematical Engineering"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CollegeId = 1,
-                            HeadId = 10,
-                            Name = "Architectural Engineering"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CollegeId = 3,
-                            HeadId = 11,
-                            Name = "Pharmacognosy"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CollegeId = 3,
-                            HeadId = 12,
-                            Name = "Pharmaceutical Chemistry"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CollegeId = 3,
-                            HeadId = 13,
-                            Name = "Biochemistry"
-                        });
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Employee", b =>
@@ -414,7 +218,7 @@ namespace GP.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DeptId")
+                    b.Property<int>("DeptId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -450,151 +254,6 @@ namespace GP.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("FacultyMembers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "Cairo, Nasr City",
-                            FirstName = "Reham",
-                            LastName = "Momtaz",
-                            MiddleName = "Ibrahem",
-                            MobilePhone = "01012345678",
-                            SSN = "1111322233334444",
-                            WorkingHours = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "Giza, Dokki",
-                            FirstName = "Mohamed",
-                            LastName = "Mayah",
-                            MiddleName = "El",
-                            MobilePhone = "01198765432",
-                            SSN = "5555666677578888",
-                            WorkingHours = 3
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "Alexandria, Smouha",
-                            FirstName = "Shohda",
-                            LastName = "Maraghy",
-                            MiddleName = "El",
-                            MobilePhone = "01234567890",
-                            SSN = "9919000011112222",
-                            WorkingHours = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Address = "Mansoura, Aga",
-                            FirstName = "Hanafy",
-                            LastName = "Ismail",
-                            MiddleName = "Mahmoud",
-                            MobilePhone = "01556789012",
-                            SSN = "2222333344345555",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Address = "Fayoum, Senouras",
-                            FirstName = "Hafez",
-                            LastName = "ElWahab",
-                            MiddleName = "Abd",
-                            MobilePhone = "01087654321",
-                            SSN = "6666770788889999",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Address = "Fayoum, Senouras",
-                            FirstName = "Hesham",
-                            LastName = "El-Deeb",
-                            MiddleName = "Mohamed",
-                            MobilePhone = "01087654321",
-                            SSN = "6666777788869999",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Address = "Fayoum, Senouras",
-                            FirstName = "Elsayed",
-                            LastName = "Soleit",
-                            MiddleName = "Abdel Aziz",
-                            MobilePhone = "01087654321",
-                            SSN = "6666737788869999",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Address = "Mansoura, Aga",
-                            FirstName = "Mohammed",
-                            LastName = "El Fawal",
-                            MiddleName = "Mahmoud",
-                            MobilePhone = "01556789012",
-                            SSN = "2222373344345555",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Address = "Mansoura, Aga",
-                            FirstName = "Mona",
-                            LastName = "Mehanna",
-                            MiddleName = "Samir",
-                            MobilePhone = "01556789012",
-                            SSN = "2222373344343555",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Address = "Mansoura, Aga",
-                            FirstName = "Eman",
-                            LastName = "Omar",
-                            MiddleName = "Mokhtar",
-                            MobilePhone = "01556789012",
-                            SSN = "2272373344034355",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Address = "Mansoura, Aga",
-                            FirstName = "Dalia",
-                            LastName = "Mohamed",
-                            MiddleName = "Adel",
-                            MobilePhone = "01556289012",
-                            SSN = "2272303544034355",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Address = "Cairo, Nasr City",
-                            FirstName = "Tamer",
-                            LastName = "Nasr",
-                            MiddleName = "Mohamed",
-                            MobilePhone = "01012345678",
-                            SSN = "1101322233334444",
-                            WorkingHours = 6
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Address = "Cairo, Nasr City",
-                            FirstName = "Nesreen",
-                            LastName = "Omar",
-                            MiddleName = "Nabil",
-                            MobilePhone = "01012345678",
-                            SSN = "1101322233333444",
-                            WorkingHours = 6
-                        });
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Place", b =>
@@ -2737,46 +2396,6 @@ namespace GP.DAL.Migrations
                     b.HasIndex("ManagerId");
 
                     b.ToTable("FinancialAffairs", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 9,
-                            Address = "Giza, Haram",
-                            FirstName = "Mona",
-                            Gender = 1,
-                            LastName = "Ibrahim",
-                            MiddleName = "Hassan",
-                            MobilePhone = "01266778899",
-                            SSN = "6677889900112233",
-                            Salary = 5300.75
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Address = "Mansoura, Aga",
-                            FirstName = "Omar",
-                            Gender = 0,
-                            LastName = "Saad",
-                            MiddleName = "Nour",
-                            MobilePhone = "01577889900",
-                            SSN = "7788690011203344",
-                            Salary = 5500.0,
-                            ManagerId = 9
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Address = "Mansoura, Aga",
-                            FirstName = "Hamed",
-                            Gender = 0,
-                            LastName = "Saad",
-                            MiddleName = "Mohamed",
-                            MobilePhone = "01577889900",
-                            SSN = "7783990011228344",
-                            Salary = 5500.0,
-                            ManagerId = 9
-                        });
                 });
 
             modelBuilder.Entity("GP.DAL.Models.FollowUp", b =>
@@ -2852,46 +2471,6 @@ namespace GP.DAL.Migrations
                     b.HasIndex("ManagerId");
 
                     b.ToTable("StudentAffairs", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 6,
-                            Address = "Cairo, Nasr City",
-                            FirstName = "Ali",
-                            Gender = 0,
-                            LastName = "Mahmoud",
-                            MiddleName = "Youssef",
-                            MobilePhone = "01022334455",
-                            SSN = "4455667788990011",
-                            Salary = 4700.0
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Address = "Alexandria, Smouha",
-                            FirstName = "Laila",
-                            Gender = 1,
-                            LastName = "Nabil",
-                            MiddleName = "Karim",
-                            MobilePhone = "01155667788",
-                            SSN = "5566778899081122",
-                            Salary = 4800.5,
-                            ManagerId = 6
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Address = "Alexandria, Smouha",
-                            FirstName = "Dana",
-                            Gender = 1,
-                            LastName = "Mohamed",
-                            MiddleName = "Karim",
-                            MobilePhone = "01155667788",
-                            SSN = "5562778899001122",
-                            Salary = 4800.5,
-                            ManagerId = 6
-                        });
                 });
 
             modelBuilder.Entity("GP.DAL.Models.StudentSchedule", b =>
@@ -2928,7 +2507,8 @@ namespace GP.DAL.Migrations
                     b.HasOne("GP.DAL.Models.FacultyMember", "Dean")
                         .WithOne()
                         .HasForeignKey("GP.DAL.Models.College", "DeanId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Dean");
                 });
@@ -2944,24 +2524,6 @@ namespace GP.DAL.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("GP.DAL.Models.CoursePrerequisite", b =>
-                {
-                    b.HasOne("GP.DAL.Models.Course", "Course")
-                        .WithMany("Prerequisites")
-                        .HasForeignKey("CourseCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GP.DAL.Models.Course", "Prerequisite")
-                        .WithMany("RequiredFor")
-                        .HasForeignKey("PrerequisiteCode")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Prerequisite");
-                });
-
             modelBuilder.Entity("GP.DAL.Models.Department", b =>
                 {
                     b.HasOne("GP.DAL.Models.College", "College")
@@ -2973,7 +2535,8 @@ namespace GP.DAL.Migrations
                     b.HasOne("GP.DAL.Models.FacultyMember", "Head")
                         .WithOne()
                         .HasForeignKey("GP.DAL.Models.Department", "HeadId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("College");
 
@@ -3004,7 +2567,8 @@ namespace GP.DAL.Migrations
                     b.HasOne("GP.DAL.Models.Department", "Department")
                         .WithMany("FacultyMembers")
                         .HasForeignKey("DeptId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });
@@ -3192,10 +2756,6 @@ namespace GP.DAL.Migrations
             modelBuilder.Entity("GP.DAL.Models.Course", b =>
                 {
                     b.Navigation("Enrollments");
-
-                    b.Navigation("Prerequisites");
-
-                    b.Navigation("RequiredFor");
 
                     b.Navigation("Schedules");
                 });

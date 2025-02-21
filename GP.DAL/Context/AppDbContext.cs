@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GP.DAL.Models;
+using GP.DAL.Seed;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GP.DAL.Context
 {
@@ -12,13 +14,9 @@ namespace GP.DAL.Context
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-            
-        }
+        {}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -183,6 +181,65 @@ namespace GP.DAL.Context
             modelBuilder.Entity<FollowUpSchedule>().ToTable("FollowUpSchedules");
             modelBuilder.Entity<StudentAffairs>().ToTable("StudentAffairs");
             modelBuilder.Entity<StudentSchedule>().ToTable("StudentSchedule");
+
+            var dateConverter = new ValueConverter<DateOnly, DateTime>(
+                v => v.ToDateTime(TimeOnly.MinValue), // Convert DateOnly -> DateTime
+                v => DateOnly.FromDateTime(v));       // Convert DateTime -> DateOnly
+
+            modelBuilder.Entity<Student>()
+                .Property(e => e.BirthDate)
+                .HasConversion(dateConverter)
+                .HasColumnType("date");
+
+            modelBuilder.Entity<Employee>()
+                .HasIndex(e => e.SSN)
+                .IsUnique();
+            modelBuilder.Entity<Student>()
+                .HasIndex(e => e.SSN)
+                .IsUnique();
+            modelBuilder.Entity<FacultyMember>()
+                .HasIndex(e => e.SSN)
+                .IsUnique();
+
+            modelBuilder.Entity<CoursePrerequisite>()
+                .HasKey(cp => new { cp.CourseCode, cp.PrerequisiteCode });
+
+            modelBuilder.Entity<CoursePrerequisite>()
+                .HasOne(cp => cp.Course)
+                .WithMany(c => c.Prerequisites)
+                .HasForeignKey(cp => cp.CourseCode)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CoursePrerequisite>()
+                .HasOne(cp => cp.Prerequisite)
+                .WithMany(c => c.RequiredFor)
+                .HasForeignKey(cp => cp.PrerequisiteCode)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
+
+            // Seed
+
+            modelBuilder.Entity<Place>().HasData(PlaceSeeder.GetPreconfiguredPlaces());
+
+            modelBuilder.Entity<Advisor>().HasData(AdvisorSeeder.GenerateEmployees());
+
+            modelBuilder.Entity<FollowUp>().HasData(FollowUpSeeder.GenerateEmployees());
+
+            modelBuilder.Entity<StudentAffairs>().HasData(StudentAndFinancialAffairsSeeder.GenerateStudentAffairs());
+
+            modelBuilder.Entity<FinancialAffairs>().HasData(StudentAndFinancialAffairsSeeder.GenerateFinancialAffairs());
+            
+            modelBuilder.Entity<College>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateColleges());
+
+            modelBuilder.Entity<Department>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateDepartments());
+
+            modelBuilder.Entity<FacultyMember>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateFacultyMembers());
+            
+            modelBuilder.Entity<Course>().HasData(CourseSeeder.GenerateCourses());
+            
+            modelBuilder.Entity<CoursePrerequisite>().HasData(CourseSeeder.GeneratePrerequisites());
+            
+
 
         }
         public DbSet<Advisor> Advisors { get; set; }

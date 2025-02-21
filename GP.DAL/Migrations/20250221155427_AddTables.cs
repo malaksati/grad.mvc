@@ -15,12 +15,12 @@ namespace GP.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SSN = table.Column<int>(type: "int", maxLength: 16, nullable: false),
+                    SSN = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Salary = table.Column<double>(type: "float", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MobilePhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false)
                 },
@@ -239,10 +239,11 @@ namespace GP.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SSN = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MobilePhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WorkingHours = table.Column<int>(type: "int", nullable: false),
                     DeptId = table.Column<int>(type: "int", nullable: false)
@@ -262,26 +263,26 @@ namespace GP.DAL.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    SSN = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegisterYear = table.Column<int>(type: "int", nullable: false),
+                    SSN = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MobilePhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HomePhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MobilePhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    HomePhone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "date", nullable: false),
                     HighSchoolGrade = table.Column<double>(type: "float", nullable: false),
                     DeptId = table.Column<int>(type: "int", nullable: false),
                     AdvisorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.SSN);
+                    table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Students_Advisors_AdvisorId",
                         column: x => x.AdvisorId,
@@ -303,9 +304,9 @@ namespace GP.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TimeBegin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimeEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Semester = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeBegin = table.Column<TimeSpan>(type: "time", nullable: false),
+                    TimeEnd = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Semester = table.Column<int>(type: "int", nullable: false),
                     AcademicYear = table.Column<int>(type: "int", nullable: false),
                     PlaceId = table.Column<int>(type: "int", nullable: false),
                     InstructorId = table.Column<int>(type: "int", nullable: false),
@@ -357,7 +358,7 @@ namespace GP.DAL.Migrations
                     Grade = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AcademicYear = table.Column<int>(type: "int", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
-                    Semester = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Semester = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -372,7 +373,7 @@ namespace GP.DAL.Migrations
                         name: "FK_Enrollments_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "SSN",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -454,6 +455,12 @@ namespace GP.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_SSN",
+                table: "Employees",
+                column: "SSN",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_CourseCode",
                 table: "Enrollments",
                 column: "CourseCode");
@@ -462,6 +469,12 @@ namespace GP.DAL.Migrations
                 name: "IX_FacultyMembers_DeptId",
                 table: "FacultyMembers",
                 column: "DeptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FacultyMembers_SSN",
+                table: "FacultyMembers",
+                column: "SSN",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_FinancialAffairs_ManagerId",
@@ -527,6 +540,12 @@ namespace GP.DAL.Migrations
                 name: "IX_Students_DeptId",
                 table: "Students",
                 column: "DeptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_SSN",
+                table: "Students",
+                column: "SSN",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentSchedule_DeptId",

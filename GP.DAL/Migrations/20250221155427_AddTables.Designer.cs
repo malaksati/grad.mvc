@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GP.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250221023055_AddTables")]
+    [Migration("20250221155427_AddTables")]
     partial class AddTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,18 +157,23 @@ namespace GP.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("MobilePhone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
-                    b.Property<int>("SSN")
+                    b.Property<string>("SSN")
+                        .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<double>("Salary")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SSN")
+                        .IsUnique();
 
                     b.ToTable("Employees");
                 });
@@ -191,9 +196,8 @@ namespace GP.DAL.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.Property<string>("Semester")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Semester")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentId", "CourseCode");
 
@@ -229,9 +233,15 @@ namespace GP.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("MobilePhone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("SSN")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<int>("WorkingHours")
                         .HasColumnType("int");
@@ -239,6 +249,9 @@ namespace GP.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DeptId");
+
+                    b.HasIndex("SSN")
+                        .IsUnique();
 
                     b.ToTable("FacultyMembers");
                 });
@@ -346,15 +359,14 @@ namespace GP.DAL.Migrations
                     b.Property<int>("PlaceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Semester")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Semester")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("TimeBegin")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("TimeBegin")
+                        .HasColumnType("time");
 
-                    b.Property<DateTime>("TimeEnd")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("TimeEnd")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 
@@ -373,11 +385,11 @@ namespace GP.DAL.Migrations
 
             modelBuilder.Entity("GP.DAL.Models.Student", b =>
                 {
-                    b.Property<int>("SSN")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SSN"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -387,7 +399,7 @@ namespace GP.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<int>("DeptId")
                         .HasColumnType("int");
@@ -404,10 +416,8 @@ namespace GP.DAL.Migrations
 
                     b.Property<string>("HomePhone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -422,16 +432,25 @@ namespace GP.DAL.Migrations
 
                     b.Property<string>("MobilePhone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<int>("RegisterYear")
                         .HasColumnType("int");
 
-                    b.HasKey("SSN");
+                    b.Property<string>("SSN")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AdvisorId");
 
                     b.HasIndex("DeptId");
+
+                    b.HasIndex("SSN")
+                        .IsUnique();
 
                     b.ToTable("Students");
                 });

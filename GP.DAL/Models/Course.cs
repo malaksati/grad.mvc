@@ -20,6 +20,7 @@ namespace GP.DAL.Models
         public Department Department { get; set; }
         public ICollection<Schedule> Schedules { get; set; }
         public ICollection<Enrollment> Enrollments { get; set; }
-
+        public ICollection<CoursePrerequisite> Prerequisites { get; set; }
+        public ICollection<CoursePrerequisite> RequiredFor { get; set; }
     }
 }
