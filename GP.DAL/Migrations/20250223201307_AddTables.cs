@@ -10,7 +10,7 @@ namespace GP.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Employees",
+                name: "Advisors",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -26,7 +26,54 @@ namespace GP.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.PrimaryKey("PK_Advisors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FinancialAffairs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SSN = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salary = table.Column<double>(type: "float", nullable: false),
+                    MobilePhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    ManagerId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FinancialAffairs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FinancialAffairs_FinancialAffairs_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "FinancialAffairs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FollowUps",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SSN = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salary = table.Column<double>(type: "float", nullable: false),
+                    MobilePhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FollowUps", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,75 +93,24 @@ namespace GP.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Advisors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Advisors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Advisors_Employees_Id",
-                        column: x => x.Id,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FinancialAffairs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    ManagerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FinancialAffairs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FinancialAffairs_Employees_Id",
-                        column: x => x.Id,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_FinancialAffairs_FinancialAffairs_ManagerId",
-                        column: x => x.ManagerId,
-                        principalTable: "FinancialAffairs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FollowUps",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FollowUps", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FollowUps_Employees_Id",
-                        column: x => x.Id,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "StudentAffairs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    ManagerId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SSN = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salary = table.Column<double>(type: "float", nullable: false),
+                    MobilePhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    ManagerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StudentAffairs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StudentAffairs_Employees_Id",
-                        column: x => x.Id,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_StudentAffairs_StudentAffairs_ManagerId",
                         column: x => x.ManagerId,
@@ -131,7 +127,8 @@ namespace GP.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StudentAffairsId = table.Column<int>(type: "int", nullable: false)
+                    StudentAffairsId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,7 +148,7 @@ namespace GP.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeanId = table.Column<int>(type: "int", nullable: false)
+                    DeanId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -164,7 +161,7 @@ namespace GP.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Semester = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Semester = table.Column<int>(type: "int", nullable: false),
                     AcademicYear = table.Column<int>(type: "int", nullable: false),
                     AmountDue = table.Column<double>(type: "float", nullable: false),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -197,6 +194,18 @@ namespace GP.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CoursePrerequisites",
+                columns: table => new
+                {
+                    CourseCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PrerequisiteCode = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CoursePrerequisites", x => new { x.CourseCode, x.PrerequisiteCode });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
@@ -220,7 +229,7 @@ namespace GP.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CollegeId = table.Column<int>(type: "int", nullable: false),
-                    HeadId = table.Column<int>(type: "int", nullable: false)
+                    HeadId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -246,7 +255,7 @@ namespace GP.DAL.Migrations
                     MobilePhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WorkingHours = table.Column<int>(type: "int", nullable: false),
-                    DeptId = table.Column<int>(type: "int", nullable: false)
+                    DeptId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -428,15 +437,33 @@ namespace GP.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Advisors_SSN",
+                table: "Advisors",
+                column: "SSN",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Applications_StudentAffairsId",
                 table: "Applications",
                 column: "StudentAffairsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Applications_StudentId",
+                table: "Applications",
+                column: "StudentId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Colleges_DeanId",
                 table: "Colleges",
                 column: "DeanId",
-                unique: true);
+                unique: true,
+                filter: "[DeanId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CoursePrerequisites_PrerequisiteCode",
+                table: "CoursePrerequisites",
+                column: "PrerequisiteCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Courses_DeptId",
@@ -452,13 +479,8 @@ namespace GP.DAL.Migrations
                 name: "IX_Departments_HeadId",
                 table: "Departments",
                 column: "HeadId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Employees_SSN",
-                table: "Employees",
-                column: "SSN",
-                unique: true);
+                unique: true,
+                filter: "[HeadId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_CourseCode",
@@ -480,6 +502,18 @@ namespace GP.DAL.Migrations
                 name: "IX_FinancialAffairs_ManagerId",
                 table: "FinancialAffairs",
                 column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FinancialAffairs_SSN",
+                table: "FinancialAffairs",
+                column: "SSN",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FollowUps_SSN",
+                table: "FollowUps",
+                column: "SSN",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_FollowUpSchedules_FollowUpId",
@@ -532,6 +566,12 @@ namespace GP.DAL.Migrations
                 column: "ManagerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StudentAffairs_SSN",
+                table: "StudentAffairs",
+                column: "SSN",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_AdvisorId",
                 table: "Students",
                 column: "AdvisorId");
@@ -553,11 +593,35 @@ namespace GP.DAL.Migrations
                 column: "DeptId");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_Applications_Students_StudentId",
+                table: "Applications",
+                column: "StudentId",
+                principalTable: "Students",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_Colleges_FacultyMembers_DeanId",
                 table: "Colleges",
                 column: "DeanId",
                 principalTable: "FacultyMembers",
                 principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CoursePrerequisites_Courses_CourseCode",
+                table: "CoursePrerequisites",
+                column: "CourseCode",
+                principalTable: "Courses",
+                principalColumn: "Code",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CoursePrerequisites_Courses_PrerequisiteCode",
+                table: "CoursePrerequisites",
+                column: "PrerequisiteCode",
+                principalTable: "Courses",
+                principalColumn: "Code",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
@@ -589,6 +653,9 @@ namespace GP.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Applications");
+
+            migrationBuilder.DropTable(
+                name: "CoursePrerequisites");
 
             migrationBuilder.DropTable(
                 name: "Enrollments");
@@ -625,9 +692,6 @@ namespace GP.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Places");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "FacultyMembers");

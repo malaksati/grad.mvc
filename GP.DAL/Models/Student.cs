@@ -18,7 +18,6 @@ namespace GP.DAL.Models
         public int RegisterYear {  get; set; }
         [StringLength(16, MinimumLength = 16, ErrorMessage = "SSN must be exactly 16 digits.")]
         [RegularExpression(@"^\d{16}$", ErrorMessage = "SSN must contain only numbers.")]
-        
         public string SSN { get; set; }
         public string Address { get; set; }
         [StringLength(11, MinimumLength = 11, ErrorMessage = "Mobile phone must be exactly 11 digits.")]
@@ -36,6 +35,7 @@ namespace GP.DAL.Models
         public ICollection<Enrollment> Enrollments { get; set; }
         public int AdvisorId { get; set; }
         public Advisor Advisor { get; set; }
+        public Application Application { get; set; }
     }
     public enum Gender { Male, Female }
 }

@@ -169,17 +169,7 @@ namespace GP.DAL.Context
             // Configure inheritance
             modelBuilder.Entity<FollowUpSchedule>().HasBaseType<Schedule>();
             modelBuilder.Entity<StudentSchedule>().HasBaseType<Schedule>();
-            modelBuilder.Entity<FinancialAffairs>().HasBaseType<Employee>();
-            modelBuilder.Entity<StudentAffairs>().HasBaseType<Employee>();
-            modelBuilder.Entity<FollowUp>().HasBaseType<Employee>();
-            modelBuilder.Entity<Advisor>().HasBaseType<Employee>();
-
-            // Table-Per-Type (TPT)
-            modelBuilder.Entity<Advisor>().ToTable("Advisors");
-            modelBuilder.Entity<FinancialAffairs>().ToTable("FinancialAffairs");
-            modelBuilder.Entity<FollowUp>().ToTable("FollowUps");
             modelBuilder.Entity<FollowUpSchedule>().ToTable("FollowUpSchedules");
-            modelBuilder.Entity<StudentAffairs>().ToTable("StudentAffairs");
             modelBuilder.Entity<StudentSchedule>().ToTable("StudentSchedule");
 
             var dateConverter = new ValueConverter<DateOnly, DateTime>(
@@ -191,7 +181,16 @@ namespace GP.DAL.Context
                 .HasConversion(dateConverter)
                 .HasColumnType("date");
 
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<Advisor>()
+                .HasIndex(e => e.SSN)
+                .IsUnique();
+            modelBuilder.Entity<FollowUp>()
+                .HasIndex(e => e.SSN)
+                .IsUnique();
+            modelBuilder.Entity<StudentAffairs>()
+                .HasIndex(e => e.SSN)
+                .IsUnique();
+            modelBuilder.Entity<FinancialAffairs>()
                 .HasIndex(e => e.SSN)
                 .IsUnique();
             modelBuilder.Entity<Student>()
@@ -217,37 +216,50 @@ namespace GP.DAL.Context
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(false);
 
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Application)
+                .WithOne(a => a.Student)
+                .HasForeignKey<Application>(a => a.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Seed
 
-            modelBuilder.Entity<Place>().HasData(PlaceSeeder.GetPreconfiguredPlaces());
+            //modelBuilder.Entity<Place>().HasData(PlaceSeeder.GetPreconfiguredPlaces());
 
-            modelBuilder.Entity<Advisor>().HasData(AdvisorSeeder.GenerateEmployees());
+            //modelBuilder.Entity<Advisor>().HasData(AdvisorSeeder.GenerateEmployees());
 
-            modelBuilder.Entity<FollowUp>().HasData(FollowUpSeeder.GenerateEmployees());
+            //modelBuilder.Entity<FollowUp>().HasData(FollowUpSeeder.GenerateEmployees());
 
-            modelBuilder.Entity<StudentAffairs>().HasData(StudentAndFinancialAffairsSeeder.GenerateStudentAffairs());
+            //modelBuilder.Entity<StudentAffairs>().HasData(StudentAndFinancialAffairsSeeder.GenerateStudentAffairs());
 
-            modelBuilder.Entity<FinancialAffairs>().HasData(StudentAndFinancialAffairsSeeder.GenerateFinancialAffairs());
+            //modelBuilder.Entity<FinancialAffairs>().HasData(StudentAndFinancialAffairsSeeder.GenerateFinancialAffairs());
             
-            modelBuilder.Entity<College>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateColleges());
+            //modelBuilder.Entity<College>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateColleges());
 
-            modelBuilder.Entity<Department>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateDepartments());
+            //modelBuilder.Entity<Department>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateDepartments());
 
-            modelBuilder.Entity<FacultyMember>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateFacultyMembers());
+            //modelBuilder.Entity<FacultyMember>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateFacultyMembers());
             
-            modelBuilder.Entity<Course>().HasData(CourseSeeder.GenerateCourses());
+            //modelBuilder.Entity<Course>().HasData(CourseSeeder.GenerateCourses());
             
-            modelBuilder.Entity<CoursePrerequisite>().HasData(CourseSeeder.GeneratePrerequisites());
+            //modelBuilder.Entity<CoursePrerequisite>().HasData(CourseSeeder.GeneratePrerequisites());
             
+            //modelBuilder.Entity<Student>().HasData(StudentSeeder.GenerateStudents());
+            
+            //modelBuilder.Entity<Receipt>().HasData(ReceiptSeeder.GenerateReceipts());
 
+            //modelBuilder.Entity<Application>().HasData(ApplicationSeeder.GenerateApplications());
+
+            //modelBuilder.Entity<Enrollment>().HasData(EnrollmentSeeder.GenerateEnrollments());
+            
 
         }
         public DbSet<Advisor> Advisors { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<College> Colleges { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<CoursePrerequisite> CoursePrerequisites { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<FacultyMember> FacultyMembers { get; set; }
         public DbSet<FinancialAffairs> FinancialAffairs { get; set; }

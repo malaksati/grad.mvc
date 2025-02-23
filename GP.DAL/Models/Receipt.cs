@@ -11,7 +11,7 @@ namespace GP.DAL.Models
     public class Receipt
     {
         public int Id { get; set; }
-        public string Semester { get; set; }
+        public SemesterType Semester { get; set; }
         public int AcademicYear { get; set; }
         [DataType(DataType.Currency)]
         public double AmountDue {  get; set; }

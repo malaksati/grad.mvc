@@ -1,4 +1,5 @@
 using GP.DAL.Context;
+using GP.DAL.Seed;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,11 +12,6 @@ builder.Services.AddDbContext<AppDbContext>(op =>
     op.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnection"));
 });
 
-
-
-
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +23,24 @@ if (!app.Environment.IsDevelopment())
 }
 
 builder.Services.AddControllersWithViews();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<AppDbContext>();
+    var env = services.GetRequiredService<IHostEnvironment>();
+    DbInitializer.SeedAdvisor(dbContext, env); 
+    DbInitializer.SeedFacultyWithoutDept(dbContext, env);
+    DbInitializer.SeedCollege(dbContext, env);
+    DbInitializer.SeedDapertment(dbContext, env);
+    DbInitializer.SeedFacultyWithDept(dbContext, env);
+    DbInitializer.SeedCourses(dbContext, env);
+    DbInitializer.SeedCoursesPre(dbContext, env);
+    DbInitializer.SeedPlace(dbContext, env);
+    DbInitializer.SeedFollowUp(dbContext, env);
+    DbInitializer.SeedStudentAffairs(dbContext, env);
+    DbInitializer.SeedFinancialAffairs(dbContext, env);
+
+}
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
