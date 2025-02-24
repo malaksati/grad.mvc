@@ -20,5 +20,15 @@ namespace GraduationProject.Controllers.Advisor
         {
             return View();
         }
+        public IActionResult DefaultScheduleEntry() {
+            return View("Dashboard");
+        }
+        public IActionResult RequestCourseModification() {
+            return View();
+        }
+        public IActionResult RequestDepartmentModification() {
+            return View();
+        }
+
     }
 }
