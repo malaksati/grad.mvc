@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card p-4 shadow" style="width: 450px;">
+        <h3 class="text-center mb-3">Personal Info</h3>
+        <div class="text-center">
+            <img id="profileImage" src="~/images/default-profile.png" class="rounded-circle mb-3 w-50" alt="Profile">
+        </div>
+        <h5 class="text-center">Hello </h5>
+        <div class="mb-2">
+            <label class="form-label" for="Email">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email" disabled>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="Address">Address</label>
+            <input type="text" class="form-control" name="Address" id="Address" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="MobilePhone">Mobile Phone</label>
+            <input type="text" class="form-control" name="MobilePhone" id="MobilePhone" disabled>
+        </div>
+        <a asp-controller="Auth" asp-action="EditProfile" class="btn btn-primary w-100">Edit Profile</a>
+    </div>
+</div>

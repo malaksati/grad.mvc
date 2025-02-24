@@ -35,5 +35,13 @@ namespace GraduationProject.Controllers.Auth
         {
             return View("Login");
         }
+        public IActionResult ShowProfile()
+        {
+            return View("Profile");
+        }
+        public IActionResult EditProfile()
+        {
+            return View("EditProfile");
+        }
     }
 }

@@ -7,10 +7,8 @@
         <h1 class="text-dark">FAQs</h1>
         <p class="lead">AI-Driven Academic Advisor Platform</p>
     </header>
-    <div class="d-flex justify-content-between align-items-start">
-        <!-- Header Section -->
+    <div class="d-flex gap-5 justify-content-between align-items-start">
         <div class="w-100">
-
             <!-- FAQ Sections -->
             <div class="accordion" id="faqAccordion">
                 <!-- What is ADAAP? -->
@@ -107,13 +105,37 @@
             </div>
         </div>
         <div class="w-50">
-            <div class="contact text-center">
-                <h3>Contact Us</h3>
-                <i class="fa-solid fa-earth-americas"></i> Mokattam,Cairo<br>
-                <i class="fa-solid fa-phone"></i> 16997<br>
-                <i class="fa-solid fa-m"></i> info@mti.edu.eg<br>
-                <i class="fa-solid fa-building-columns"></i> MTI.University
+            <div class="contact px-3">
+                <h3 class="mb-5">Contact Us</h3>
+                <div class="mb-3"><i class="fa-solid fa-earth-americas"></i> Mokattam,Cairo</div>
+                <div class="mb-3"><i class="fa-solid fa-phone"></i> 16997<br></div>
+                <div class="mb-3"><i class="fa-solid fa-m"></i> info@mti.edu.eg</div>
+                <div class="mb-3"><i class="fa-solid fa-building-columns"></i> MTI.University</div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>    
+    // script.js
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const question = item.querySelector('.accordion-button').textContent.toLowerCase();
+            const answer = item.querySelector('.accordion-body').textContent.toLowerCase();
+
+            if (question.includes(searchTerm)) {
+                item.style.display = 'block';
+            } else if (answer.includes(searchTerm)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+    </script>
+
+}
