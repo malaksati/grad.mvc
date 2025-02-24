@@ -37,8 +37,8 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.SeedCoursesPre(dbContext, env);
     DbInitializer.SeedPlace(dbContext, env);
     DbInitializer.SeedFollowUp(dbContext, env);
-    DbInitializer.SeedStudentAffairs(dbContext, env);
-    DbInitializer.SeedFinancialAffairs(dbContext, env);
+    //DbInitializer.SeedStudentAffairs(dbContext, env);
+    //DbInitializer.SeedFinancialAffairs(dbContext, env);
 
 }
 app.UseHttpsRedirection();
