@@ -24,6 +24,7 @@ namespace GP.DAL.Models
         public string Address { get; set; }
         public Gender Gender { get; set; }
         public ICollection<Student> Students { get; set; }
-        public ICollection<Schedule> Schedules { get; set; }
+        public ICollection<StudentSchedule> StudentSchedules { get; set; }
+        public ICollection<InstructorSchedule> InstructorSchedules { get; set; }
     }
 }

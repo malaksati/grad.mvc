@@ -32,27 +32,37 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="StudentAffairs" asp-action="NewApplication">Apply</a>
                         </li>
                         @* admin  *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ShowRequests">Requests</a>
-                        </li>
+                        @* <li class="nav-item"> *@
+                        @*     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Dashboard">Dashboard</a> *@
+                        @* </li> *@
+                        @* <li class="nav-item"> *@
+                        @*     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ShowRequests">Requests</a> *@
+                        @* </li> *@
 
                         @* advisor *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Advisor" asp-action="InstructorInfoPage">Instructor Schedule</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Advisor" asp-action="SemesterInfoPage">Semester Info</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Advisor" asp-action="Dashboard">Dashboard</a>
-                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Advisor" asp-action="InstructorInfoPage">Instructor Schedule</a> 
+                         </li> 
+                         <li class="nav-item"> 
+                             <a class="nav-link text-dark" asp-area="" asp-controller="Advisor" asp-action="SemesterInfoPage">Semester Info</a> 
+                         </li> 
+                         <li class="nav-item"> 
+                             <a class="nav-link text-dark" asp-area="" asp-controller="Advisor" asp-action="Dashboard">Dashboard</a> 
+                         </li> 
 
-                        
+                        @* student
+                        @* <li class="nav-item"> *@
+                        @*     <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="StudentSchedule">Student Schedule</a> *@
+                        @* </li> *@
 
-
+                       @* instructor *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Instructor" asp-action="InstructorSchedule">Instructor Schedule</a>
+                        </li>
+                        @* assistant *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Instructor" asp-action="AssistantSchedule">Assistant Schedule</a>
+                        </li>
                     </ul>
                     <ul class="nav-icons navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item align-content-center">

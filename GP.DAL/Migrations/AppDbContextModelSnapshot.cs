@@ -81,9 +81,8 @@ namespace GP.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("StudentAffairsId")
                         .HasColumnType("int");
@@ -134,6 +133,9 @@ namespace GP.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("DeptId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -376,6 +378,128 @@ namespace GP.DAL.Migrations
                     b.ToTable("FollowUps");
                 });
 
+            modelBuilder.Entity("GP.DAL.Models.FollowUpSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AcademicYear")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AssistantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CourseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FollowUpId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InstructorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAttendant")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Semester")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("TimeBegin")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("TimeEnd")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Week")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssistantId");
+
+                    b.HasIndex("CourseCode");
+
+                    b.HasIndex("FollowUpId");
+
+                    b.HasIndex("InstructorId");
+
+                    b.HasIndex("PlaceId");
+
+                    b.ToTable("FollowUpSchedules");
+                });
+
+            modelBuilder.Entity("GP.DAL.Models.InstructorSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AcademicYear")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AdvisorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AssistantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CourseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("InstructorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Semester")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("TimeBegin")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("TimeEnd")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdvisorId");
+
+                    b.HasIndex("AssistantId");
+
+                    b.HasIndex("CourseCode");
+
+                    b.HasIndex("InstructorId");
+
+                    b.HasIndex("PlaceId");
+
+                    b.ToTable("InstructorSchedules");
+                });
+
             modelBuilder.Entity("GP.DAL.Models.Place", b =>
                 {
                     b.Property<int>("Id")
@@ -445,61 +569,6 @@ namespace GP.DAL.Migrations
                     b.HasIndex("StudentAffairsId");
 
                     b.ToTable("Receipts");
-                });
-
-            modelBuilder.Entity("GP.DAL.Models.Schedule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AcademicYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AdvisorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssistantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CourseCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Day")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InstructorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlaceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Semester")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("TimeBegin")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("TimeEnd")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdvisorId");
-
-                    b.HasIndex("AssistantId");
-
-                    b.HasIndex("CourseCode");
-
-                    b.HasIndex("InstructorId");
-
-                    b.HasIndex("PlaceId");
-
-                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Student", b =>
@@ -627,27 +696,30 @@ namespace GP.DAL.Migrations
                     b.ToTable("StudentAffairs");
                 });
 
-            modelBuilder.Entity("GP.DAL.Models.FollowUpSchedule", b =>
-                {
-                    b.HasBaseType("GP.DAL.Models.Schedule");
-
-                    b.Property<int>("FollowUpId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsAttendant")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Week")
-                        .HasColumnType("int");
-
-                    b.HasIndex("FollowUpId");
-
-                    b.ToTable("FollowUpSchedules", (string)null);
-                });
-
             modelBuilder.Entity("GP.DAL.Models.StudentSchedule", b =>
                 {
-                    b.HasBaseType("GP.DAL.Models.Schedule");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AcademicYear")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AdvisorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AssistantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CourseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DeptId")
                         .HasColumnType("int");
@@ -655,12 +727,47 @@ namespace GP.DAL.Migrations
                     b.Property<int>("Group")
                         .HasColumnType("int");
 
+                    b.Property<int?>("InstructorId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Semester")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("TimeBegin")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("TimeEnd")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdvisorId");
+
+                    b.HasIndex("AssistantId");
+
+                    b.HasIndex("CourseCode");
+
                     b.HasIndex("DeptId");
 
-                    b.ToTable("StudentSchedule", (string)null);
+                    b.HasIndex("InstructorId");
+
+                    b.HasIndex("PlaceId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentSchedules");
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Application", b =>
@@ -778,6 +885,86 @@ namespace GP.DAL.Migrations
                     b.Navigation("Manager");
                 });
 
+            modelBuilder.Entity("GP.DAL.Models.FollowUpSchedule", b =>
+                {
+                    b.HasOne("GP.DAL.Models.FacultyMember", "Assistant")
+                        .WithMany()
+                        .HasForeignKey("AssistantId");
+
+                    b.HasOne("GP.DAL.Models.Course", "Course")
+                        .WithMany("FollowUpSchedules")
+                        .HasForeignKey("CourseCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GP.DAL.Models.FollowUp", "FollowUp")
+                        .WithMany("FollowUpSchedules")
+                        .HasForeignKey("FollowUpId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GP.DAL.Models.FacultyMember", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("InstructorId");
+
+                    b.HasOne("GP.DAL.Models.Place", "Place")
+                        .WithMany("FollowUpSchedules")
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Assistant");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("FollowUp");
+
+                    b.Navigation("Instructor");
+
+                    b.Navigation("Place");
+                });
+
+            modelBuilder.Entity("GP.DAL.Models.InstructorSchedule", b =>
+                {
+                    b.HasOne("GP.DAL.Models.Advisor", "Advisor")
+                        .WithMany("InstructorSchedules")
+                        .HasForeignKey("AdvisorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GP.DAL.Models.FacultyMember", "Assistant")
+                        .WithMany("AssistantSchedules")
+                        .HasForeignKey("AssistantId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GP.DAL.Models.Course", "Course")
+                        .WithMany("InstructorSchedules")
+                        .HasForeignKey("CourseCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GP.DAL.Models.FacultyMember", "Instructor")
+                        .WithMany("InstructorSchedules")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GP.DAL.Models.Place", "Place")
+                        .WithMany("InstructorSchedules")
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Advisor");
+
+                    b.Navigation("Assistant");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Instructor");
+
+                    b.Navigation("Place");
+                });
+
             modelBuilder.Entity("GP.DAL.Models.Receipt", b =>
                 {
                     b.HasOne("GP.DAL.Models.College", "College")
@@ -803,49 +990,6 @@ namespace GP.DAL.Migrations
                     b.Navigation("FinancialAffairs");
 
                     b.Navigation("StudentAffairs");
-                });
-
-            modelBuilder.Entity("GP.DAL.Models.Schedule", b =>
-                {
-                    b.HasOne("GP.DAL.Models.Advisor", "Advisor")
-                        .WithMany("Schedules")
-                        .HasForeignKey("AdvisorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GP.DAL.Models.FacultyMember", "Assistant")
-                        .WithMany("AssistantSchedules")
-                        .HasForeignKey("AssistantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GP.DAL.Models.Course", "Course")
-                        .WithMany("Schedules")
-                        .HasForeignKey("CourseCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GP.DAL.Models.FacultyMember", "Instructor")
-                        .WithMany("InstructorSchedules")
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GP.DAL.Models.Place", "Place")
-                        .WithMany("Schedules")
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Advisor");
-
-                    b.Navigation("Assistant");
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Instructor");
-
-                    b.Navigation("Place");
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Student", b =>
@@ -877,43 +1021,62 @@ namespace GP.DAL.Migrations
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("GP.DAL.Models.FollowUpSchedule", b =>
+            modelBuilder.Entity("GP.DAL.Models.StudentSchedule", b =>
                 {
-                    b.HasOne("GP.DAL.Models.FollowUp", "FollowUp")
-                        .WithMany("FollowUpSchedules")
-                        .HasForeignKey("FollowUpId")
+                    b.HasOne("GP.DAL.Models.Advisor", "Advisor")
+                        .WithMany("StudentSchedules")
+                        .HasForeignKey("AdvisorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GP.DAL.Models.Schedule", null)
-                        .WithOne()
-                        .HasForeignKey("GP.DAL.Models.FollowUpSchedule", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                    b.HasOne("GP.DAL.Models.FacultyMember", "Assistant")
+                        .WithMany()
+                        .HasForeignKey("AssistantId");
+
+                    b.HasOne("GP.DAL.Models.Course", "Course")
+                        .WithMany("StudentSchedules")
+                        .HasForeignKey("CourseCode")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("FollowUp");
-                });
-
-            modelBuilder.Entity("GP.DAL.Models.StudentSchedule", b =>
-                {
                     b.HasOne("GP.DAL.Models.Department", "Department")
                         .WithMany("StudentSchedules")
                         .HasForeignKey("DeptId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GP.DAL.Models.Schedule", null)
-                        .WithOne()
-                        .HasForeignKey("GP.DAL.Models.StudentSchedule", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                    b.HasOne("GP.DAL.Models.FacultyMember", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("InstructorId");
+
+                    b.HasOne("GP.DAL.Models.Place", "Place")
+                        .WithMany("StudentSchedules")
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("GP.DAL.Models.Student", null)
+                        .WithMany("StudentSchedules")
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Advisor");
+
+                    b.Navigation("Assistant");
+
+                    b.Navigation("Course");
+
                     b.Navigation("Department");
+
+                    b.Navigation("Instructor");
+
+                    b.Navigation("Place");
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Advisor", b =>
                 {
-                    b.Navigation("Schedules");
+                    b.Navigation("InstructorSchedules");
+
+                    b.Navigation("StudentSchedules");
 
                     b.Navigation("Students");
                 });
@@ -929,11 +1092,15 @@ namespace GP.DAL.Migrations
                 {
                     b.Navigation("Enrollments");
 
+                    b.Navigation("FollowUpSchedules");
+
+                    b.Navigation("InstructorSchedules");
+
                     b.Navigation("Prerequisites");
 
                     b.Navigation("RequiredFor");
 
-                    b.Navigation("Schedules");
+                    b.Navigation("StudentSchedules");
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Department", b =>
@@ -968,7 +1135,11 @@ namespace GP.DAL.Migrations
 
             modelBuilder.Entity("GP.DAL.Models.Place", b =>
                 {
-                    b.Navigation("Schedules");
+                    b.Navigation("FollowUpSchedules");
+
+                    b.Navigation("InstructorSchedules");
+
+                    b.Navigation("StudentSchedules");
                 });
 
             modelBuilder.Entity("GP.DAL.Models.Student", b =>
@@ -977,6 +1148,8 @@ namespace GP.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Enrollments");
+
+                    b.Navigation("StudentSchedules");
                 });
 
             modelBuilder.Entity("GP.DAL.Models.StudentAffairs", b =>

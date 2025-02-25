@@ -126,7 +126,7 @@ namespace GP.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     StudentAffairsId = table.Column<int>(type: "int", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -212,6 +212,7 @@ namespace GP.DAL.Migrations
                     Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreditHour = table.Column<int>(type: "int", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: false),
                     NoOfSec = table.Column<int>(type: "int", nullable: false),
                     NoOfLec = table.Column<int>(type: "int", nullable: false),
                     DeptId = table.Column<int>(type: "int", nullable: false)
@@ -307,51 +308,105 @@ namespace GP.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedules",
+                name: "FollowUpSchedules",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
                     Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TimeBegin = table.Column<TimeSpan>(type: "time", nullable: false),
                     TimeEnd = table.Column<TimeSpan>(type: "time", nullable: false),
                     Semester = table.Column<int>(type: "int", nullable: false),
                     AcademicYear = table.Column<int>(type: "int", nullable: false),
                     PlaceId = table.Column<int>(type: "int", nullable: false),
-                    InstructorId = table.Column<int>(type: "int", nullable: false),
-                    AssistantId = table.Column<int>(type: "int", nullable: false),
+                    InstructorId = table.Column<int>(type: "int", nullable: true),
+                    AssistantId = table.Column<int>(type: "int", nullable: true),
                     CourseCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AdvisorId = table.Column<int>(type: "int", nullable: false)
+                    Week = table.Column<int>(type: "int", nullable: false),
+                    IsAttendant = table.Column<bool>(type: "bit", nullable: false),
+                    FollowUpId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.PrimaryKey("PK_FollowUpSchedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Schedules_Advisors_AdvisorId",
-                        column: x => x.AdvisorId,
-                        principalTable: "Advisors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Schedules_Courses_CourseCode",
+                        name: "FK_FollowUpSchedules_Courses_CourseCode",
                         column: x => x.CourseCode,
                         principalTable: "Courses",
                         principalColumn: "Code",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Schedules_FacultyMembers_AssistantId",
+                        name: "FK_FollowUpSchedules_FacultyMembers_AssistantId",
+                        column: x => x.AssistantId,
+                        principalTable: "FacultyMembers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FollowUpSchedules_FacultyMembers_InstructorId",
+                        column: x => x.InstructorId,
+                        principalTable: "FacultyMembers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FollowUpSchedules_FollowUps_FollowUpId",
+                        column: x => x.FollowUpId,
+                        principalTable: "FollowUps",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FollowUpSchedules_Places_PlaceId",
+                        column: x => x.PlaceId,
+                        principalTable: "Places",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InstructorSchedules",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeBegin = table.Column<TimeSpan>(type: "time", nullable: false),
+                    TimeEnd = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Semester = table.Column<int>(type: "int", nullable: false),
+                    AcademicYear = table.Column<int>(type: "int", nullable: false),
+                    PlaceId = table.Column<int>(type: "int", nullable: false),
+                    InstructorId = table.Column<int>(type: "int", nullable: true),
+                    AssistantId = table.Column<int>(type: "int", nullable: true),
+                    CourseCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AdvisorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InstructorSchedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InstructorSchedules_Advisors_AdvisorId",
+                        column: x => x.AdvisorId,
+                        principalTable: "Advisors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_InstructorSchedules_Courses_CourseCode",
+                        column: x => x.CourseCode,
+                        principalTable: "Courses",
+                        principalColumn: "Code",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_InstructorSchedules_FacultyMembers_AssistantId",
                         column: x => x.AssistantId,
                         principalTable: "FacultyMembers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Schedules_FacultyMembers_InstructorId",
+                        name: "FK_InstructorSchedules_FacultyMembers_InstructorId",
                         column: x => x.InstructorId,
                         principalTable: "FacultyMembers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Schedules_Places_PlaceId",
+                        name: "FK_InstructorSchedules_Places_PlaceId",
                         column: x => x.PlaceId,
                         principalTable: "Places",
                         principalColumn: "Id",
@@ -387,52 +442,68 @@ namespace GP.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FollowUpSchedules",
+                name: "StudentSchedules",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Week = table.Column<int>(type: "int", nullable: false),
-                    IsAttendant = table.Column<bool>(type: "bit", nullable: false),
-                    FollowUpId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeBegin = table.Column<TimeSpan>(type: "time", nullable: false),
+                    TimeEnd = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Semester = table.Column<int>(type: "int", nullable: false),
+                    AcademicYear = table.Column<int>(type: "int", nullable: false),
+                    PlaceId = table.Column<int>(type: "int", nullable: false),
+                    InstructorId = table.Column<int>(type: "int", nullable: true),
+                    AssistantId = table.Column<int>(type: "int", nullable: true),
+                    CourseCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AdvisorId = table.Column<int>(type: "int", nullable: false),
+                    Group = table.Column<int>(type: "int", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    DeptId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FollowUpSchedules", x => x.Id);
+                    table.PrimaryKey("PK_StudentSchedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FollowUpSchedules_FollowUps_FollowUpId",
-                        column: x => x.FollowUpId,
-                        principalTable: "FollowUps",
+                        name: "FK_StudentSchedules_Advisors_AdvisorId",
+                        column: x => x.AdvisorId,
+                        principalTable: "Advisors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_FollowUpSchedules_Schedules_Id",
-                        column: x => x.Id,
-                        principalTable: "Schedules",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StudentSchedule",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Group = table.Column<int>(type: "int", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false),
-                    DeptId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentSchedule", x => x.Id);
+                        name: "FK_StudentSchedules_Courses_CourseCode",
+                        column: x => x.CourseCode,
+                        principalTable: "Courses",
+                        principalColumn: "Code",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentSchedule_Departments_DeptId",
+                        name: "FK_StudentSchedules_Departments_DeptId",
                         column: x => x.DeptId,
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentSchedule_Schedules_Id",
-                        column: x => x.Id,
-                        principalTable: "Schedules",
+                        name: "FK_StudentSchedules_FacultyMembers_AssistantId",
+                        column: x => x.AssistantId,
+                        principalTable: "FacultyMembers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_StudentSchedules_FacultyMembers_InstructorId",
+                        column: x => x.InstructorId,
+                        principalTable: "FacultyMembers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_StudentSchedules_Places_PlaceId",
+                        column: x => x.PlaceId,
+                        principalTable: "Places",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StudentSchedules_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
                         principalColumn: "Id");
                 });
 
@@ -516,9 +587,54 @@ namespace GP.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_FollowUpSchedules_AssistantId",
+                table: "FollowUpSchedules",
+                column: "AssistantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FollowUpSchedules_CourseCode",
+                table: "FollowUpSchedules",
+                column: "CourseCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FollowUpSchedules_FollowUpId",
                 table: "FollowUpSchedules",
                 column: "FollowUpId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FollowUpSchedules_InstructorId",
+                table: "FollowUpSchedules",
+                column: "InstructorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FollowUpSchedules_PlaceId",
+                table: "FollowUpSchedules",
+                column: "PlaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstructorSchedules_AdvisorId",
+                table: "InstructorSchedules",
+                column: "AdvisorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstructorSchedules_AssistantId",
+                table: "InstructorSchedules",
+                column: "AssistantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstructorSchedules_CourseCode",
+                table: "InstructorSchedules",
+                column: "CourseCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstructorSchedules_InstructorId",
+                table: "InstructorSchedules",
+                column: "InstructorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstructorSchedules_PlaceId",
+                table: "InstructorSchedules",
+                column: "PlaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Receipts_CollegeId",
@@ -534,31 +650,6 @@ namespace GP.DAL.Migrations
                 name: "IX_Receipts_StudentAffairsId",
                 table: "Receipts",
                 column: "StudentAffairsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_AdvisorId",
-                table: "Schedules",
-                column: "AdvisorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_AssistantId",
-                table: "Schedules",
-                column: "AssistantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_CourseCode",
-                table: "Schedules",
-                column: "CourseCode");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_InstructorId",
-                table: "Schedules",
-                column: "InstructorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_PlaceId",
-                table: "Schedules",
-                column: "PlaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentAffairs_ManagerId",
@@ -588,9 +679,39 @@ namespace GP.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentSchedule_DeptId",
-                table: "StudentSchedule",
+                name: "IX_StudentSchedules_AdvisorId",
+                table: "StudentSchedules",
+                column: "AdvisorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentSchedules_AssistantId",
+                table: "StudentSchedules",
+                column: "AssistantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentSchedules_CourseCode",
+                table: "StudentSchedules",
+                column: "CourseCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentSchedules_DeptId",
+                table: "StudentSchedules",
                 column: "DeptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentSchedules_InstructorId",
+                table: "StudentSchedules",
+                column: "InstructorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentSchedules_PlaceId",
+                table: "StudentSchedules",
+                column: "PlaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentSchedules_StudentId",
+                table: "StudentSchedules",
+                column: "StudentId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Applications_Students_StudentId",
@@ -664,13 +785,13 @@ namespace GP.DAL.Migrations
                 name: "FollowUpSchedules");
 
             migrationBuilder.DropTable(
+                name: "InstructorSchedules");
+
+            migrationBuilder.DropTable(
                 name: "Receipts");
 
             migrationBuilder.DropTable(
-                name: "StudentSchedule");
-
-            migrationBuilder.DropTable(
-                name: "Students");
+                name: "StudentSchedules");
 
             migrationBuilder.DropTable(
                 name: "FollowUps");
@@ -682,16 +803,16 @@ namespace GP.DAL.Migrations
                 name: "StudentAffairs");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
-
-            migrationBuilder.DropTable(
-                name: "Advisors");
-
-            migrationBuilder.DropTable(
                 name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Places");
+
+            migrationBuilder.DropTable(
+                name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Advisors");
 
             migrationBuilder.DropTable(
                 name: "FacultyMembers");

@@ -14,7 +14,10 @@ namespace GP.DAL.Context
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {}
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -101,30 +104,50 @@ namespace GP.DAL.Context
                 .HasForeignKey(sa => sa.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
             // One-to-Many relationship between Course and Schedule
-            modelBuilder.Entity<Schedule>()
+            modelBuilder.Entity<StudentSchedule>()
                 .HasOne(s => s.Course)
-                .WithMany(c => c.Schedules)
+                .WithMany(c => c.StudentSchedules)
+                .HasForeignKey(s => s.CourseCode)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<FollowUpSchedule>()
+                .HasOne(s => s.Course)
+                .WithMany(c => c.FollowUpSchedules)
+                .HasForeignKey(s => s.CourseCode)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<InstructorSchedule>()
+                .HasOne(s => s.Course)
+                .WithMany(c => c.InstructorSchedules)
                 .HasForeignKey(s => s.CourseCode)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many relationship between Instructor and Schedule
-            modelBuilder.Entity<Schedule>()
+            modelBuilder.Entity<InstructorSchedule>()
                 .HasOne(s => s.Instructor)
                 .WithMany(fm => fm.InstructorSchedules)
                 .HasForeignKey(s => s.InstructorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many relationship between Assistant and Schedule
-            modelBuilder.Entity<Schedule>()
+            modelBuilder.Entity<InstructorSchedule>()
                 .HasOne(s => s.Assistant)
                 .WithMany(fm => fm.AssistantSchedules)
                 .HasForeignKey(s => s.AssistantId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many relationship between Place and Schedule
-            modelBuilder.Entity<Schedule>()
+            modelBuilder.Entity<StudentSchedule>()
                 .HasOne(s => s.Place)
-                .WithMany(p => p.Schedules)
+                .WithMany(p => p.StudentSchedules)
+                .HasForeignKey(s => s.PlaceId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<FollowUpSchedule>()
+                .HasOne(s => s.Place)
+                .WithMany(p => p.FollowUpSchedules)
+                .HasForeignKey(s => s.PlaceId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<InstructorSchedule>()
+                .HasOne(s => s.Place)
+                .WithMany(p => p.InstructorSchedules)
                 .HasForeignKey(s => s.PlaceId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -160,17 +183,17 @@ namespace GP.DAL.Context
                 .OnDelete(DeleteBehavior.Restrict);
 
             // advisor to schedules 1-m
-            modelBuilder.Entity<Schedule>()
+            modelBuilder.Entity<StudentSchedule>()
                 .HasOne(s => s.Advisor)
-                .WithMany(a => a.Schedules)
+                .WithMany(a => a.StudentSchedules)
+                .HasForeignKey(s => s.AdvisorId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<InstructorSchedule>()
+                .HasOne(s => s.Advisor)
+                .WithMany(a => a.InstructorSchedules)
                 .HasForeignKey(s => s.AdvisorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configure inheritance
-            modelBuilder.Entity<FollowUpSchedule>().HasBaseType<Schedule>();
-            modelBuilder.Entity<StudentSchedule>().HasBaseType<Schedule>();
-            modelBuilder.Entity<FollowUpSchedule>().ToTable("FollowUpSchedules");
-            modelBuilder.Entity<StudentSchedule>().ToTable("StudentSchedule");
 
             var dateConverter = new ValueConverter<DateOnly, DateTime>(
                 v => v.ToDateTime(TimeOnly.MinValue), // Convert DateOnly -> DateTime
@@ -222,37 +245,6 @@ namespace GP.DAL.Context
                 .HasForeignKey<Application>(a => a.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Seed
-
-            //modelBuilder.Entity<Place>().HasData(PlaceSeeder.GetPreconfiguredPlaces());
-
-            //modelBuilder.Entity<Advisor>().HasData(AdvisorSeeder.GenerateEmployees());
-
-            //modelBuilder.Entity<FollowUp>().HasData(FollowUpSeeder.GenerateEmployees());
-
-            //modelBuilder.Entity<StudentAffairs>().HasData(StudentAndFinancialAffairsSeeder.GenerateStudentAffairs());
-
-            //modelBuilder.Entity<FinancialAffairs>().HasData(StudentAndFinancialAffairsSeeder.GenerateFinancialAffairs());
-            
-            //modelBuilder.Entity<College>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateColleges());
-
-            //modelBuilder.Entity<Department>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateDepartments());
-
-            //modelBuilder.Entity<FacultyMember>().HasData(CollegeDepartmentFacultyMemberSeeder.GenerateFacultyMembers());
-            
-            //modelBuilder.Entity<Course>().HasData(CourseSeeder.GenerateCourses());
-            
-            //modelBuilder.Entity<CoursePrerequisite>().HasData(CourseSeeder.GeneratePrerequisites());
-            
-            //modelBuilder.Entity<Student>().HasData(StudentSeeder.GenerateStudents());
-            
-            //modelBuilder.Entity<Receipt>().HasData(ReceiptSeeder.GenerateReceipts());
-
-            //modelBuilder.Entity<Application>().HasData(ApplicationSeeder.GenerateApplications());
-
-            //modelBuilder.Entity<Enrollment>().HasData(EnrollmentSeeder.GenerateEnrollments());
-            
-
         }
         public DbSet<Advisor> Advisors { get; set; }
         public DbSet<Application> Applications { get; set; }
@@ -265,13 +257,12 @@ namespace GP.DAL.Context
         public DbSet<FinancialAffairs> FinancialAffairs { get; set; }
         public DbSet<FollowUp> FollowUps { get; set; }
         public DbSet<FollowUpSchedule> FollowUpSchedules { get; set; }
-        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<InstructorSchedule> InstructorSchedules { get; set; }
         public DbSet<Place> Places { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentAffairs> StudentAffairs { get; set; }
         public DbSet<StudentSchedule> StudentSchedules { get; set; }
-
 
     }
 }

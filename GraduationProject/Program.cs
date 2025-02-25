@@ -37,8 +37,16 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.SeedCoursesPre(dbContext, env);
     DbInitializer.SeedPlace(dbContext, env);
     DbInitializer.SeedFollowUp(dbContext, env);
-    //DbInitializer.SeedStudentAffairs(dbContext, env);
-    //DbInitializer.SeedFinancialAffairs(dbContext, env);
+    DbInitializer.SeedStudentAffairs(dbContext, env);
+    DbInitializer.SeedFinancialAffairs(dbContext, env);
+    DbInitializer.SeedStudents(dbContext, env);
+    DbInitializer.SeedReceipts(dbContext, env);
+    DbInitializer.SeedApplications(dbContext, env);
+    DbInitializer.SeedEnrollments(dbContext, env);
+    DbInitializer.SeedInstructorAssistants(dbContext, env);
+    DbInitializer.SeedInstructorSchedules(dbContext, env);
+    DbInitializer.SeedStudentSchedules(dbContext, env);
+    DbInitializer.SeedFollowUpSchedules(dbContext, env);
 
 }
 app.UseHttpsRedirection();

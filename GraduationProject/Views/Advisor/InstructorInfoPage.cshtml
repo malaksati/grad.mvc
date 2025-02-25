@@ -2,6 +2,97 @@
     ViewData["Title"] = "Instructor Info";
 }
 
+<div class="advisor">
+    <div class="container py-3 enter-schedule inst">
+        <div class="back-button position-absolute">
+            <a class="text-primary m-3 d-block" href="semester_info.html">
+                <i class="fa-2x fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <h1 class="heading text-center m-1">Enter Instructor Schedule</h1><br>
+        <div class="input-box">
+            <p><strong>Instructor:</strong></p> <input type="text" class="input-box" id="text">
+        </div>
+        <br>
+        <form id="schedule-form">
+            <div class="schedule">
+                <p id="Saturday" class="day fs-5 fw-bold">Saturday</p>
+                <table class="table scheduleTable" id="scheduleTable">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th>Day</th>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Type</th>
+                            <th>Place</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select class="input-schedule code_co" name="code-Saturday">
+                                    <option value="Saturday">Saturday </option>
+                                    <option value="Sunday">Sunday </option>
+                                    <option value="Monday">Monday </option>
+                                    <option value="Tuesday">Tuesday </option>
+                                    <option value="Wednesday">Wednesday </option>
+                                    <option value="Thursday">Thursday </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="input-schedule title" name="course-Saturday"></select>
+                            </td>
+                            <td>
+                                <input type="text" class="input-schedule" name="instructor-Saturday"
+                                       placeholder="Instructor">
+                            </td>
+                            <td>
+                                <select name="Place-Saturday" class="input-schedule" id="Type">
+                                    <option value="Ex">Ex</option>
+                                    <option value="Ex/Lab">Ex/Lab</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="input-schedule" name="place-Saturday" placeholder="Place">
+                            </td>
+
+                            <td>
+                                <select name="timebegin-Saturday" class="input-schedule">
+                                    <option value="1">09:00 </option>
+                                    <option value="2">10:20 </option>
+                                    <option value="3">11:40 </option>
+                                    <option value="4">13:00 </option>
+                                    <option value="5">14:20 </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="timeend-Saturday" class="input-schedule">
+                                    <option value="1"> 10:15</option>
+                                    <option value="2"> 11:35</option>
+                                    <option value="3"> 12:55</option>
+                                    <option value="4"> 14:15</option>
+                                    <option value="5"> 15:35</option>
+                                </select>
+                            </td>
+                            <td class="plus">
+                                <button onclick="addRow('Saturday')" class="btn">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                </table>
+            </div>
+            <br>
+            <input class="btn btn-primary m-auto d-block w-25 fs-5" type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/advisor.js"></script>
     <partial name="_ValidationScriptsPartial" />

@@ -1,6 +1,5 @@
 [
     {
-        "Id": 1,
         "FirstName": "Malak",
         "MiddleName": "Mohamed",
         "LastName": "Sati",
@@ -9,7 +8,7 @@
         "Address": "Cairo, Egypt",
         "MobilePhone": "01022039241",
         "HomePhone": "0202291158",
-        "Gender": "Female",
+        "Gender": 1,
         "Level": 4,
         "BirthDate": "2003-02-23",
         "HighSchoolGrade": 79.8,
@@ -17,7 +16,6 @@
         "AdvisorId": 1
     },
     {
-        "Id": 2,
         "FirstName": "Mona",
         "MiddleName": "Ahmed",
         "LastName": "Hassan",
@@ -26,7 +24,7 @@
         "Address": "Alexandria",
         "MobilePhone": "01023456789",
         "HomePhone": "0224567890",
-        "Gender": "Female",
+        "Gender": 1,
         "Level": 4,
         "BirthDate": "2001-03-22",
         "HighSchoolGrade": 97.2,
@@ -34,7 +32,6 @@
         "AdvisorId": 2
     },
     {
-        "Id": 3,
         "FirstName": "Omar",
         "MiddleName": "Youssef",
         "LastName": "Sayed",
@@ -43,7 +40,7 @@
         "Address": "Giza",
         "MobilePhone": "01134567890",
         "HomePhone": "0235678901",
-        "Gender": "Male",
+        "Gender": 0,
         "Level": 2,
         "BirthDate": "2003-07-10",
         "HighSchoolGrade": 89.7,
@@ -51,7 +48,6 @@
         "AdvisorId": 1
     },
     {
-        "Id": 4,
         "FirstName": "Fatma",
         "MiddleName": "Mahmoud",
         "LastName": "Nabil",
@@ -60,7 +56,7 @@
         "Address": "Mansoura",
         "MobilePhone": "01245678901",
         "HomePhone": "0246789012",
-        "Gender": "Female",
+        "Gender": 1,
         "Level": 1,
         "BirthDate": "2004-12-05",
         "HighSchoolGrade": 91.5,
@@ -68,7 +64,6 @@
         "AdvisorId": 1
     },
     {
-        "Id": 5,
         "FirstName": "Yousef",
         "MiddleName": "Khaled",
         "LastName": "Mohsen",
@@ -77,7 +72,7 @@
         "Address": "Fayoum",
         "MobilePhone": "01056789012",
         "HomePhone": "0257890123",
-        "Gender": "Male",
+        "Gender": 0,
         "Level": 4,
         "BirthDate": "2000-08-25",
         "HighSchoolGrade": 88.9,
@@ -85,7 +80,6 @@
         "AdvisorId": 2
     },
     {
-        "Id": 6,
         "FirstName": "Salma",
         "MiddleName": "Omar",
         "LastName": "Adel",
@@ -94,7 +88,7 @@
         "Address": "Suez",
         "MobilePhone": "01167890123",
         "HomePhone": "0268901234",
-        "Gender": "Female",
+        "Gender": 1,
         "Level": 3,
         "BirthDate": "2002-02-18",
         "HighSchoolGrade": 96.1,
@@ -102,7 +96,6 @@
         "AdvisorId": 1
     },
     {
-        "Id": 7,
         "FirstName": "Hassan",
         "MiddleName": "Nasser",
         "LastName": "Fouad",
@@ -111,7 +104,7 @@
         "Address": "Asyut",
         "MobilePhone": "01278901234",
         "HomePhone": "0279012345",
-        "Gender": "Male",
+        "Gender": 0,
         "Level": 4,
         "BirthDate": "2001-09-30",
         "HighSchoolGrade": 85.3,
@@ -119,7 +112,6 @@
         "AdvisorId": 2
     },
     {
-        "Id": 8,
         "FirstName": "Nada",
         "MiddleName": "Sherif",
         "LastName": "Bassem",
@@ -128,7 +120,7 @@
         "Address": "Zagazig",
         "MobilePhone": "01089012345",
         "HomePhone": "0280123456",
-        "Gender": "Female",
+        "Gender": 1,
         "Level": 2,
         "BirthDate": "2003-06-14",
         "HighSchoolGrade": 92.7,
@@ -136,7 +128,6 @@
         "AdvisorId": 1
     },
     {
-        "Id": 9,
         "FirstName": "Karim",
         "MiddleName": "Hady",
         "LastName": "Samir",
@@ -145,7 +136,7 @@
         "Address": "Ismailia",
         "MobilePhone": "01190123456",
         "HomePhone": "0291234567",
-        "Gender": "Male",
+        "Gender": 0,
         "Level": 1,
         "BirthDate": "2004-10-20",
         "HighSchoolGrade": 94.6,
@@ -153,7 +144,6 @@
         "AdvisorId": 2
     },
     {
-        "Id": 10,
         "FirstName": "Esraa",
         "MiddleName": "Amr",
         "LastName": "Gamal",
@@ -162,7 +152,7 @@
         "Address": "Luxor",
         "MobilePhone": "01211223344",
         "HomePhone": "0211223344",
-        "Gender": "Female",
+        "Gender": 1,
         "Level": 4,
         "BirthDate": "1999-05-02",
         "HighSchoolGrade": 90.2,
@@ -170,7 +160,6 @@
         "AdvisorId": 2
     },
     {
-        "Id": 11,
         "FirstName": "Rami",
         "MiddleName": "Hesham",
         "LastName": "Zaki",
@@ -179,7 +168,7 @@
         "Address": "Cairo",
         "MobilePhone": "01022334455",
         "HomePhone": "0222334455",
-        "Gender": "Male",
+        "Gender": 0,
         "Level": 3,
         "BirthDate": "2002-11-30",
         "HighSchoolGrade": 95.3,
@@ -187,7 +176,6 @@
         "AdvisorId": 1
     },
     {
-        "Id": 12,
         "FirstName": "Sara",
         "MiddleName": "Mostafa",
         "LastName": "Hady",
@@ -196,7 +184,7 @@
         "Address": "Alexandria",
         "MobilePhone": "01133445566",
         "HomePhone": "0233445566",
-        "Gender": "Female",
+        "Gender": 1,
         "Level": 4,
         "BirthDate": "2001-07-08",
         "HighSchoolGrade": 97.8,
@@ -204,7 +192,6 @@
         "AdvisorId": 2
     },
     {
-        "Id": 13,
         "FirstName": "Tamer",
         "MiddleName": "Waleed",
         "LastName": "Ragab",
@@ -213,7 +200,7 @@
         "Address": "Giza",
         "MobilePhone": "01244556677",
         "HomePhone": "0244556677",
-        "Gender": "Male",
+        "Gender": 0,
         "Level": 2,
         "BirthDate": "2003-04-12",
         "HighSchoolGrade": 88.5,
@@ -221,7 +208,6 @@
         "AdvisorId": 2
     },
     {
-        "Id": 14,
         "FirstName": "Marwa",
         "MiddleName": "Tarek",
         "LastName": "Ehab",
@@ -230,7 +216,7 @@
         "Address": "Mansoura",
         "MobilePhone": "01055667788",
         "HomePhone": "0255667788",
-        "Gender": "Female",
+        "Gender": 1,
         "Level": 1,
         "BirthDate": "2004-01-05",
         "HighSchoolGrade": 92.1,

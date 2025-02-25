@@ -187,3 +187,51 @@ td {
         font-size: small !important;
     }
 }
+
+.doctor-schedule .table-container {
+    max-width: 700px;
+    margin: auto;
+}
+
+.schedule-s .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.schedule-s .notes {
+    margin-top: 40px;
+    font-size: 16px;
+    direction: rtl;
+    text-align: center;
+    font-weight: bold;
+}
+
+.schedule-s .signature {
+    margin-top: 30px;
+    direction: rtl;
+    text-align: left;
+    font-weight: bold;
+}
+
+
+.assistant-schedule .table th,
+.assistant-schedule .table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.assistant-schedule .header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.inst .input-box {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}

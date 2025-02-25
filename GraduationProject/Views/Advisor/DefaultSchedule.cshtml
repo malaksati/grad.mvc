@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Default Schedule";
+    var semester = ViewData["Semester"];
+    var level = ViewData["Level"];
 }
 
 <div class="advisor">
@@ -10,8 +12,8 @@
             </div>
             <h1 class="heading text-center m-1">Enter Default Schedule</h1>
             <div class="w-100 my-3 d-flex justify-content-around">
-                <p class="fs-3">Level: <span class="fw-bold" id="level_schedule"></span></p>
-                <p class="fs-3">Semester: <span class="fw-bold" id="semster_schedule"></span></p>
+                <p class="fs-3">Level: <span class="fw-bold" id="level_schedule">@level</span></p>
+                <p class="fs-3">Semester: <span class="fw-bold" id="semster_schedule">@semester</span></p>
             </div>
             <form method="post" asp-controller="Advisor" asp-action="DefaultScheduleEntry" id="schedule-form">
                 <div class="schedule">
@@ -222,6 +224,7 @@
                                         class="fa-solid fa-plus"></i></button></td>
                         </tr>
                     </table>
+
                     <p id="Thursday" class="day fs-5 fw-bold">Thursday</p>
                     <table class="table">
                         <tr class="table-secondary">
@@ -272,76 +275,6 @@
 
 
 @section Scripts {
-<script>
-        document.getElementById("schedule-form").addEventListener("submit", async function (event) {
-            event.preventDefault();
-
-            let scheduleData = [];
-            const ddays = [
-                "Saturday",
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-            ];
-            ddays.forEach((day) => {
-                let codeElements = document.getElementsByName(`code-${day}[]`);
-                let courseElements = document.getElementsByName(`course-${day}[]`);
-                let instructorElements = document.getElementsByName(
-                    `instructor-${day}[]`
-                );
-                let placeElements = document.getElementsByName(`place-${day}[]`);
-                let typeElements = document.getElementsByName(`type-${day}[]`);
-                let timeElements = document.getElementsByName(`time-${day}[]`);
-
-                let daySchedule = [];
-
-                for (let i = 0; i < codeElements.length; i++) {
-                    daySchedule.push({
-                        code: codeElements[i].value.trim(),
-                        course: courseElements[i].value.trim(),
-                        instructor: instructorElements[i].value.trim(),
-                        place: placeElements[i].value.trim(),
-                        type: typeElements[i].value.trim(),
-                        time: timeElements[i].value.trim(),
-                    });
-                }
-
-                if (daySchedule.length > 0) {
-                    scheduleData.push({ day, courses: daySchedule });
-                }
-
-                console.log("Schedule Data:", scheduleData);
-
-            });
-        });
-        window.onload = function () {
-            const level = sessionStorage.getItem('level');
-            const semester = sessionStorage.getItem('semester');
-            const strcourses = sessionStorage.getItem('courses');
-            let courses = strcourses.split(",");
-            courses.forEach((course, index) => {
-                if (document.querySelectorAll(".code_co").values.length == 0) {
-                    document.querySelectorAll(".code_co").forEach((v) => {
-                        v.innerHTML += `<option value="${index + 1}">${index + 1}</option>`;
-                    });
-                }
-                if (document.querySelectorAll(".title").values.length == 0) {
-                    document.querySelectorAll(".title").forEach((v) => {
-                        v.innerHTML += `<option value="${index + 1}">${course}</option>`;
-                    });
-                }
-            });
-            document.getElementById("level_schedule").innerText = level;
-            document.getElementById("semster_schedule").innerText = semester;
-        };
-        document.getElementById("logout").onclick = function (event) {
-            event.preventDefault();
-            sessionStorage.clear();
-            window.location.href = '../login.html';
-        }
-    </script>
 
     <script src="~/js/advisor.js"></script>
     <partial name="_ValidationScriptsPartial" />

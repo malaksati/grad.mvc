@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
+    var courses = ViewData["Courses"] as List<Course>;
+    var departments = ViewData["Departments"] as List<Department>;
 }
 
 <section class="dashboard">
@@ -18,7 +20,18 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                @foreach (var course in courses)
+                {
+                    <tr>
+                        <td>@course.Code</td>
+                        <td>@course.Name</td>
+                        <td>@course.Level</td>
+                        <td>@course.NoOfLec</td>
+                        <td>@course.NoOfSec</td>
+                        <td>@course.CreditHour</td>
+                        <td>@course.Department.Name</td>
+                    </tr>
+                }
                 </tbody>
             </table>
             <br>
@@ -35,6 +48,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                @foreach (var dep in departments)
+                {
+                    <tr>
+                        <td>@dep.Id</td>
+                        <td>@dep.Name</td>
+                    </tr>
+                }
                 </tbody>
             </table>
             <br>
