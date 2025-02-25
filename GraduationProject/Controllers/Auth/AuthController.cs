@@ -1,10 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GP.DAL.Context;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 
 namespace GraduationProject.Controllers.Auth
 {
     public class AuthController : Controller
     {
+        private readonly AppDbContext _context;
+
+        public AuthController(AppDbContext context)
+        {
+            _context = context; // Dependency Injection
+        }
         [HttpGet]
         public IActionResult Login()
         {

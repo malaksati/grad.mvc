@@ -1,2 +1,39 @@
 ﻿@{
+	ViewData["Title"] = "Edit Department";
+}
+
+<section class="container add-department" style="width: 800px;">
+    <div class="back-button position-absolute">
+        <a class="text-primary m-3 d-block" asp-action="Dashboard" asp-controller="Admin"><i class="fa-2x fa-solid fa-arrow-left"></i></a>
+    </div>
+    <h1 class="fs-4 m-3 py-3 px-5">Edit Department</h1>
+    <form action="" method="post" class="m-auto p-4">
+        <div class="mb-3">
+            <label class="form-label" for="Name">Department Name</label>
+            <input class="form-control" value="Name" name="Name" id="Name" type="text">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="College">College</label>
+            <select class="form-control" name="College" id="College">
+                <option value="0" selected>Choose..</option>
+                <option value="Computers & Artificial Intelligence">Computers & Artificial Intelligence</option>
+                <option value="Pharmacy">Pharmacy</option>
+                <option value="Engineering">Engineering</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="Head">Head Department</label>
+            <select class="form-control" name="Head" id="Head">
+                <option value="0" selected>Choose..</option>
+                <option value="">Ahmed</option>
+                <option value="">Mahmoud</option>
+                <option value="">Sara</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Edit</button>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

@@ -20,5 +20,9 @@ namespace GraduationProject.Controllers.Course
         {
             return RedirectToAction("");
         }
+        public IActionResult Delete()
+        {
+            return RedirectToAction("");
+        }
     }
 }
