@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using GP.DAL.Models;
 using GP.DAL.Seed;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GP.DAL.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<GPUser>
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -25,6 +27,23 @@ namespace GP.DAL.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+
+
+            #region Idenity
+            modelBuilder.Entity<IdentityUserLogin<string>>().HasNoKey();
+            modelBuilder.Entity<IdentityUserRole<string>>().HasNoKey();
+            modelBuilder.Entity<IdentityUserToken<string>>().HasNoKey();
+            #endregion
+
+
+
+
+
+
+
+
+
+
             // College and dean (facultymembers) 1-1
             modelBuilder.Entity<College>()
                 .HasOne(d => d.Dean)
@@ -246,6 +265,7 @@ namespace GP.DAL.Context
                 .OnDelete(DeleteBehavior.Restrict);
 
         }
+        #region Models
         public DbSet<Advisor> Advisors { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<College> Colleges { get; set; }
@@ -262,7 +282,8 @@ namespace GP.DAL.Context
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentAffairs> StudentAffairs { get; set; }
-        public DbSet<StudentSchedule> StudentSchedules { get; set; }
-
+        public DbSet<StudentSchedule> StudentSchedules { get; set; } 
+        #endregion
+        //public DbSet<GPUser> GPUsers { get; set; }
     }
 }
