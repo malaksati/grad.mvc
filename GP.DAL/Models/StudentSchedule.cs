@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace GP.DAL.Models
 {
-    public class StudentSchedule
+
+    public class StudentSchedule // model
     {
         public int Id { get; set; }
         public int ScheduleId { get; set; }

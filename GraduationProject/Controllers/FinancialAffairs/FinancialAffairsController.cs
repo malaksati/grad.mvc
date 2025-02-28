@@ -1,8 +1,11 @@
 ﻿using GP.DAL.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraduationProject.Controllers.FinancialAffairs
 {
+    [Authorize(Roles = "FinancialAffairs")]
+
     public class FinancialAffairsController : Controller
     {
         private readonly AppDbContext _context;
@@ -23,6 +26,12 @@ namespace GraduationProject.Controllers.FinancialAffairs
         {
             return View("PaymentDetails");
         }
+        public IActionResult UpdateReceipt()
+        {
+            return RedirectToAction("ReceiptTable", "StudentAffairs");
+        }
+        [Authorize(Roles = "ManagerOfFinancialAffairs")]
+
         public IActionResult ManagerStats()
         {
             return View();

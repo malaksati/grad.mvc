@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GP.DAL.Models
 {
+    
     public class Advisor
     {
         public int Id { get; set; }

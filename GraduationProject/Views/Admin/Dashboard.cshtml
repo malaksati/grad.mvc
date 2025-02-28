@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
-    var courses = ViewData["Courses"] as List<Course>;
-    var departments = ViewData["Departments"] as List<Department>;
+    var courses = ViewData["Courses"] as IEnumerable<Course>;
+    var departments = ViewData["Departments"] as IEnumerable<Department>;
 }
 <section class="admin">
     <div class="container dashboard py-5">

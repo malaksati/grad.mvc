@@ -1,11 +1,14 @@
 ﻿using GP.DAL.Context;
 using GP.DAL.Dto;
 using GP.DAL.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -18,6 +21,7 @@ namespace GP.DAL.Seed
 {
     public class DbInitializer
     {
+        
         public static void SeedAdvisor(AppDbContext context, IHostEnvironment env)
         {
             var filePath = Path.Combine(env.ContentRootPath, "wwwroot", "json", "advisor.json");
@@ -343,6 +347,97 @@ namespace GP.DAL.Seed
                 }
             }
         }
+        public static async Task SeedRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            string[] roles = { "User",
+                "Advisor",
+                "Admin",
+                "Student",
+                "FinancialAffairs",
+                "ManagerOfFinancialAffairs",
+                "StudentAffairs",
+                "ManagerOfStudentAffairs",
+                "Instructor",
+                "Assistant",
+                "Head",
+                "Dean",
+                "FollowUp" };
+
+            foreach (var role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+        }
+        public static async Task SeedUsers(IServiceProvider serviceProvider)
+        {
+            var _userManager = serviceProvider.GetRequiredService<UserManager<GPUser>>();
+
+            var usersWithRoles = new Dictionary<string, string>
+    {
+        { "adm@g.com", "Admin" },
+        { "adv@g.com", "Advisor" },
+        { "std@g.com", "Student" },
+        { "finan@g.com", "FinancialAffairs" }, // Fixed Typo
+        { "mfinan@g.com", "ManagerOfFinancialAffairs" }, // Fixed Typo
+        { "mstdaff@g.com", "ManagerOfStudentAffairs" }, // Fixed Typo
+        { "stdaff@g.com", "StudentAffairs" },
+        { "inst@g.com", "Instructor" },
+        { "assis@g.com", "Assistant" },
+        { "head@g.com", "Head" },
+        { "dean@g.com", "Dean" },
+        { "follow@g.com", "FollowUp" }
+    };
+
+            foreach (var userWithRole in usersWithRoles)
+            {
+                string email = userWithRole.Key;
+                string role = userWithRole.Value;
+
+                var user = await _userManager.FindByEmailAsync(email);
+
+                if (user == null)
+                {
+                    user = new GPUser { UserName = email, Email = email, EmailConfirmed = true };
+                    var result = await _userManager.CreateAsync(user, "qweQWE123!!");
+
+                    if (!result.Succeeded)
+                    {
+                        Console.WriteLine($"Failed to create user {email}");
+                        foreach (var error in result.Errors)
+                        {
+                            Console.WriteLine($"Error: {error.Description}");
+                        }
+                        continue; // Skip to the next user if creation fails
+                    }
+                }
+
+                // Ensure the role exists before assigning
+                var _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                if (!await _roleManager.RoleExistsAsync(role))
+                {
+                    Console.WriteLine($"Role '{role}' does not exist. Skipping user {email}.");
+                    continue; // Skip role assignment if role does not exist
+                }
+                // Assign role if user isn't already in it
+                if (!await _userManager.IsInRoleAsync(user, role))
+                {
+                    var roleResult = await _userManager.AddToRoleAsync(user, role);
+
+                    if (!roleResult.Succeeded)
+                    {
+                        Console.WriteLine($"Failed to assign role {role} to {email}");
+                        foreach (var error in roleResult.Errors)
+                        {
+                            Console.WriteLine($"Error: {error.Description}");
+                        }
+                    }
+                }
+            }
+        }
+
     }
-   
 }

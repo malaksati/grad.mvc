@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GP.DAL.Context;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GraduationProject.Controllers.Advisor
 {
+    [Authorize(Roles = "Advisor")]
+
     public class AdvisorController : Controller
     {
         private readonly AppDbContext _context;

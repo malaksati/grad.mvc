@@ -33,7 +33,7 @@ namespace GP.DAL.Context
             modelBuilder.Entity<IdentityUserLogin<string>>().HasNoKey();
             modelBuilder.Entity<IdentityUserRole<string>>().HasNoKey();
             modelBuilder.Entity<IdentityUserToken<string>>().HasNoKey();
-            #endregion
+            #endregion  
 
 
 
@@ -264,6 +264,7 @@ namespace GP.DAL.Context
                 .HasForeignKey<Application>(a => a.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            
         }
         #region Models
         public DbSet<Advisor> Advisors { get; set; }

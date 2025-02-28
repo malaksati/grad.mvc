@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GP.DAL.Models;
 using GP.DAL.Context;
+using Microsoft.AspNetCore.Authorization;
 namespace GraduationProject.Controllers.StudentAffairs
 {
+    [Authorize(Roles = "StudentAffairs")]
     public class StudentAffairsController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext context;
 
-        public StudentAffairsController(AppDbContext context)
+        public StudentAffairsController(AppDbContext _context)
         {
             _context = context; // Dependency Injection
         }
@@ -20,6 +22,27 @@ namespace GraduationProject.Controllers.StudentAffairs
         public IActionResult NewApplication(string MobilePhone) // ay 7aga
         {
             return RedirectToAction("Index", "Home");
+        }
+        public IActionResult ApplicationTable()
+        {
+            return View();
+        }
+        public IActionResult ApplicationInfo()
+        {
+            return View();
+        }
+        public IActionResult ReceiptTable()
+        {
+            return View();
+        }
+        public IActionResult ReceiptInfo()
+        {
+            return View();
+        }
+        [Authorize("ManagerOfStudentAffairs")]
+        public IActionResult ManagerStats()
+        {
+            return View();
         }
     }
 }

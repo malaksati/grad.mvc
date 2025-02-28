@@ -12,7 +12,7 @@ namespace GP.DAL.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int CollegeId { get; set; }
-        public College College { get; set; }
+        public College? College { get; set; }
         // One-to-One relationship for the Head of the Department
         public int? HeadId { get; set; }
         public FacultyMember? Head { get; set; }
@@ -20,7 +20,7 @@ namespace GP.DAL.Models
         // One-to-Many relationship for Faculty Members
         public ICollection<FacultyMember>? FacultyMembers { get; set; }
         public ICollection<Course> Courses { get; set; }
-        public ICollection<Student> Students { get; set; }
-        public ICollection<StudentSchedule> StudentSchedules { get; set; }
+        public ICollection<Student>? Students { get; set; }
+        public ICollection<StudentSchedule>? StudentSchedules { get; set; }
     }
 }

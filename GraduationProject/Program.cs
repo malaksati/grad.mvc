@@ -1,5 +1,9 @@
+using GP.BLL.Interfaces;
+using GP.BLL.Repositories;
 using GP.DAL.Context;
+using GP.DAL.Models;
 using GP.DAL.Seed;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,36 @@ builder.Services.AddDbContext<AppDbContext>(op =>
 {
     op.UseSqlServer(builder.Configuration.GetConnectionString("DefultConnection"));
 });
+builder.Services.AddIdentity<GPUser, IdentityRole>(
+              config =>
+              {
+
+                  //config.Password.RequiredUniqueChars = 2;
+                  //config.Password.RequireDigit = true;
+                  //config.Password.RequireLowercase = true;
+                  //config.Password.RequireUppercase = true;
+                  //config.Password.RequireNonAlphanumeric = true;
+                  //config.User.RequireUniqueEmail = true;
+                  //config.Lockout.MaxFailedAccessAttempts = 5;
+                  //config.Lockout.DefaultLockoutTimeSpan = System.TimeSpan.FromMinutes(5);
+                  //config.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+              }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(
+               config =>
+               {
+                   config.LoginPath = "/Account/SignIn";
+                   //config.ExpireTimeSpan = System.TimeSpan.FromDays(5);
+                   //config.SlidingExpiration = true;
+               });
+
+//builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+builder.Services.AddScoped<IInstructorScheduleRepositroy,InstructorScheduleRepositroy>();
+builder.Services.AddScoped<ICourseRepository,CourseRepository>();
+builder.Services.AddScoped<IFacultyMemberRepsitory,FacultyMemberRepsitory>();
+builder.Services.AddScoped<ICollegeRepository,CollegeRepository>();
 
 var app = builder.Build();
 
@@ -23,12 +57,13 @@ if (!app.Environment.IsDevelopment())
 }
 
 builder.Services.AddControllersWithViews();
+#region Seeding
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var dbContext = services.GetRequiredService<AppDbContext>();
     var env = services.GetRequiredService<IHostEnvironment>();
-    DbInitializer.SeedAdvisor(dbContext, env); 
+    DbInitializer.SeedAdvisor(dbContext, env);
     DbInitializer.SeedFacultyWithoutDept(dbContext, env);
     DbInitializer.SeedCollege(dbContext, env);
     DbInitializer.SeedDapertment(dbContext, env);
@@ -47,8 +82,11 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.SeedInstructorSchedules(dbContext, env);
     DbInitializer.SeedStudentSchedules(dbContext, env);
     DbInitializer.SeedFollowUpSchedules(dbContext, env);
+    await DbInitializer.SeedRoles(services);
+    //await DbInitializer.SeedUsers(services);
 
 }
+#endregion
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

@@ -10,8 +10,9 @@ namespace GP.DAL.Models
 {
     public class GPUser :IdentityUser
     {
-        public string FName { get; set; }
-        public string LName { get; set; }
+
+        public string? FName { get; set; }
+        public string? LName { get; set; }
       
     }
 }

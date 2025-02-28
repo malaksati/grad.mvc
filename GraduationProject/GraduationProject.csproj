@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GP.BLL\GP.BLL.csproj" />
     <ProjectReference Include="..\GP.DAL\GP.DAL.csproj" />
   </ItemGroup>
 

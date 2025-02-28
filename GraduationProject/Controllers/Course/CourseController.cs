@@ -1,4 +1,5 @@
-﻿using GP.DAL.Context;
+﻿using GP.BLL.Interfaces;
+using GP.DAL.Context;
 using GP.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,23 +7,33 @@ namespace GraduationProject.Controllers.Course
 {
     public class CourseController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly ICourseRepository _courseRepository;
+        private readonly IDepartmentRepository _departmentRepository;
 
-        public CourseController(AppDbContext context)
+
+        public CourseController(ICourseRepository courseRepository, IDepartmentRepository departmentRepository)
         {
-            _context = context; // Dependency Injection
+            _courseRepository = courseRepository;
+            _departmentRepository = departmentRepository;
         }
-        public IActionResult Add()
+
+        public IActionResult Add(GP.DAL.Models.Course course)
         {
-            return RedirectToAction("");
+            if (!ModelState.IsValid)
+            {
+                // If validation fails, reload the form with the department data
+                ViewData["Departments"] = _departmentRepository.GetDepartments();
+                return RedirectToAction("CourseAddPage", "Admin", course.Code);
+            }
+
+            _courseRepository.AddCourse(course);
+
+            return RedirectToAction("Dashboard", "Admin");
         }
-        public IActionResult Edit()
+        public IActionResult Delete(string code)
         {
-            return RedirectToAction("");
-        }
-        public IActionResult Delete()
-        {
-            return RedirectToAction("");
+            _courseRepository.DeleteCourse(code);
+            return RedirectToAction("Dashboard", "Admin");
         }
     }
 }

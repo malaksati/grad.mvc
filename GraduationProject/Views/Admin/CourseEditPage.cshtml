@@ -1,56 +1,49 @@
 ﻿@{
-	ViewData["Title"] = "Edit Course";
+    ViewData["Title"] = "Edit Course";
+    var course = ViewData["Course"] as Course;
+    var deps = ViewData["Departments"] as IEnumerable<Department>;
 }
 
 <section class="container add-course" style="width: 800px;">
     <div class="back-button position-absolute">
         <a class="text-primary m-3 d-block" asp-action="Dashboard" asp-controller="Admin"><i class="fa-2x fa-solid fa-arrow-left"></i></a>
     </div>
-    <h1 class="fs-4 m-3 py-3 px-5">Add Course</h1>
-    <form action="" method="post" class="m-auto p-4">
+    <h1 class="fs-4 m-3 py-3 px-5">Edit Course</h1>
+    <form asp-controller="Admin" asp-action="CourseEdit" method="post" class="m-auto p-4">
         <div class="mb-3">
             <label class="form-label" for="Code">Course Code</label>
-            <input class="form-control" disabled name="Code" id="Code" type="text">
+            <input class="form-control" disabled name="Code" id="Code" type="text" value="@course.Code">
         </div>
         <div class="mb-3">
             <label class="form-label" for="Name">Course Name</label>
-            <input class="form-control" value="Name" name="Name" id="Name" type="text">
+            <input class="form-control" value="@course.Name" name="Name" id="Name" type="text">
         </div>
         <div class="mb-3">
             <label class="form-label" for="CreditHour">Credit Hour</label>
-            <input class="form-control" value="3" name="CreditHour" id="CreditHour" type="number">
+            <input class="form-control" value="@course.CreditHour" name="CreditHour" id="CreditHour" type="number">
         </div>
         <div class="mb-3">
             <label class="form-label" for="NoOfSec">Number of Sections</label>
-            <input class="form-control" value="2" name="NoOfSec" id="NoOfSec" type="number">
+            <input class="form-control" value="@course.NoOfSec" name="NoOfSec" id="NoOfSec" type="number">
         </div>
         <div class="mb-3">
             <label class="form-label" for="NoOfLec">Number of Lectures</label>
-            <input class="form-control" value="2" name="NoOfLec" id="NoOfLec" type="number">
+            <input class="form-control" value="@course.NoOfLec" name="NoOfLec" id="NoOfLec" type="number">
         </div>
         <div class="mb-3">
             <label class="form-label" for="Level">Level</label>
-            <input class="form-control" value="2" name="Level" id="Level" type="text">
+            <input class="form-control" value="@course.Level" name="Level" id="Level" type="text">
         </div>
         <div class="mb-3">
-            <label class="form-label" for="dep">Department</label>
-            <select class="form-control" name="dep" id="dep">
+            <label class="form-label" for="DepId">Department</label>
+            <select class="form-control" name="DepId" id="DepId">
                 <option value="0" selected>Choose..</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Information Systems">Information System</option>
-                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                @foreach(var dep in deps) {
+                    <option value="@dep.Id">@dep.Name | College: @dep.College.Name</option>
+                }
             </select>
         </div>
-        <div class="mb-3">
-            <label class="form-label" for="College">College</label>
-            <select class="form-control" name="College" id="College">
-                <option value="0" selected>Choose..</option>
-                <option value="Computers & Artificial Intelligence">Computers & Artificial Intelligence</option>
-                <option value="Pharmacy">Pharmacy</option>
-                <option value="Engineering">Engineering</option>
-            </select>
-        </div>
-        <button class="btn btn-primary" type="submit">Add</button>
+        <button class="btn btn-primary" type="submit">Update</button>
     </form>
 </section>
 

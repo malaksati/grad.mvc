@@ -24,8 +24,8 @@ namespace GP.DAL.Models
         public int WorkingHours { get; set; }
         public int? DeptId { get; set; }
         public Department? Department { get; set; }
-        public ICollection<InstructorSchedule> InstructorSchedules { get; set; }
-        public ICollection<InstructorSchedule> AssistantSchedules { get; set; }
+        public ICollection<InstructorSchedule>? InstructorSchedules { get; set; }
+        public ICollection<InstructorSchedule>? AssistantSchedules { get; set; }
 
     }
 }

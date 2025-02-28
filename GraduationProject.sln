@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraduationProject", "Gradua
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GP.DAL", "GP.DAL\GP.DAL.csproj", "{20CE406C-BAD8-4E23-8057-10E7A1577C86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GP.BLL", "GP.BLL\GP.BLL.csproj", "{7E717938-C174-4FCE-BDA3-DB5D85837C99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GP.BLL", "GP.BLL\GP.BLL.csproj", "{75A3CEF6-A35A-44E9-BBC6-B784DED87629}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{20CE406C-BAD8-4E23-8057-10E7A1577C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20CE406C-BAD8-4E23-8057-10E7A1577C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20CE406C-BAD8-4E23-8057-10E7A1577C86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E717938-C174-4FCE-BDA3-DB5D85837C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E717938-C174-4FCE-BDA3-DB5D85837C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E717938-C174-4FCE-BDA3-DB5D85837C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E717938-C174-4FCE-BDA3-DB5D85837C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75A3CEF6-A35A-44E9-BBC6-B784DED87629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75A3CEF6-A35A-44E9-BBC6-B784DED87629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75A3CEF6-A35A-44E9-BBC6-B784DED87629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75A3CEF6-A35A-44E9-BBC6-B784DED87629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -19,11 +19,11 @@ namespace GP.DAL.Models
         public int NoOfLec { get; set; }
         public int DeptId { get; set; }
         public Department Department { get; set; }
-        public ICollection<StudentSchedule> StudentSchedules { get; set; }
-        public ICollection<FollowUpSchedule> FollowUpSchedules { get; set; }
-        public ICollection<InstructorSchedule> InstructorSchedules { get; set; }
-        public ICollection<Enrollment> Enrollments { get; set; }
-        public ICollection<CoursePrerequisite> Prerequisites { get; set; }
-        public ICollection<CoursePrerequisite> RequiredFor { get; set; }
+        public ICollection<StudentSchedule>? StudentSchedules { get; set; }
+        public ICollection<FollowUpSchedule>? FollowUpSchedules { get; set; }
+        public ICollection<InstructorSchedule>? InstructorSchedules { get; set; }
+        public ICollection<Enrollment>? Enrollments { get; set; }
+        public ICollection<CoursePrerequisite>? Prerequisites { get; set; }
+        public ICollection<CoursePrerequisite>? RequiredFor { get; set; }
     }
 }
