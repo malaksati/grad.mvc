@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace GP.BLL.Interfaces
 {
-    public interface IFacultyMemberRepsitory
+    public interface IStudentScheduleRepository
     {
-        IEnumerable<FacultyMember> GetHeads();
-        IEnumerable<FacultyMember> GetAll();
+        IEnumerable<StudentSchedule> GetStudentScheduleByScheduleId(int ScheduleId);
     }
 }

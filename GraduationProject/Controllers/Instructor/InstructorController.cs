@@ -17,17 +17,18 @@ namespace GraduationProject.Controllers.Instructor
             //_context = context; // Dependency Injection
             _instructorScheduleRepositroy = instructorScheduleRepositroy;
         }
-        [Authorize(Roles = "Instructor")]
+        //[Authorize(Roles = "Instructor")]
         public IActionResult InstructorSchedule()
         {
-            var schedule = _instructorScheduleRepositroy.GetInstructorSchedule();
-            Console.WriteLine(schedule);
-            return View(schedule);
+            ViewData["Schedule"] = _instructorScheduleRepositroy.GetInstructorScheduleByScheduleId(1);
+            //Console.WriteLine(schedule);
+            return View();
         }
-        [Authorize(Roles = "Assistant")]
+        //[Authorize(Roles = "Assistant")]
 
         public IActionResult AssistantSchedule()
         {
+            ViewData["Schedule"] = _instructorScheduleRepositroy.GetAssistantScheduleByScheduleId(2);
             return View();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using GP.BLL.Interfaces;
 using GP.DAL.Context;
+using GP.DAL.Dto;
 using GP.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +24,12 @@ namespace GP.BLL.Repositories
             var result = _dbContext.Courses.Include(c => c.Department).AsNoTracking().ToList();
             return result;
         }
+        public IEnumerable<CourseDTO> GetCoursesNameCode()
+        {
+            return _dbContext.Courses
+        .Select(c => new CourseDTO { Value = c.Code,Text = c.Name }) // Avoid circular references
+        .ToList();
+        }
         public async Task<Course> GetCourseById(string id)
         {
             var course = await _dbContext.Courses.FindAsync(id);//// find op search in cache if found return it else search in database
@@ -38,9 +45,10 @@ namespace GP.BLL.Repositories
             _dbContext.Courses.Update(course);
             return _dbContext.SaveChanges();
         }
-        public int DeleteCourse(string courseId)
+        public async Task<int> DeleteCourseAsync(string Code)
         {
-            _dbContext.Remove(courseId);
+            var course = await GetCourseById(Code);
+            _dbContext.Remove(course);
             return _dbContext.SaveChanges();
         }
     }

@@ -33,9 +33,9 @@ namespace GraduationProject.Controllers.Department
 
             return RedirectToAction("Dashboard", "Admin");
         }
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int Id)
         {
-            _departmentRepository.DeleteDepartment(id);
+            _departmentRepository.DeleteDepartmentAsync(Id);
             return RedirectToAction("Dashboard", "Admin");
         }
     }

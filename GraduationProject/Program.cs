@@ -44,7 +44,9 @@ builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
 builder.Services.AddScoped<IInstructorScheduleRepositroy,InstructorScheduleRepositroy>();
 builder.Services.AddScoped<ICourseRepository,CourseRepository>();
 builder.Services.AddScoped<IFacultyMemberRepsitory,FacultyMemberRepsitory>();
-builder.Services.AddScoped<ICollegeRepository,CollegeRepository>();
+builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
+builder.Services.AddScoped<IStudentScheduleRepository, StudentScheduleRepository>();
+builder.Services.AddScoped<IPlaceRepository, PlaceRepository>();
 
 var app = builder.Build();
 

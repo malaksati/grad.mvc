@@ -1,6 +1,7 @@
 ﻿using GP.BLL.Interfaces;
 using GP.DAL.Context;
 using GP.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,10 @@ namespace GP.BLL.Repositories
         public IEnumerable<FacultyMember> GetHeads()
         {
             return _dbContext.Departments.Where(d => d.HeadId.HasValue).Select(d => d.Head).ToList();
+        }
+        public IEnumerable<FacultyMember> GetAll()
+        {
+            return _dbContext.FacultyMembers.AsNoTracking().ToList();
         }
     }
 }

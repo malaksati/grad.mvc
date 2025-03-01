@@ -10,7 +10,8 @@ namespace GP.BLL.Interfaces
     public interface IInstructorScheduleRepositroy
     {
         // Task<IEnumerable<InstructorSchedule>> GetInstructorSchedulesAsync();
-        IEnumerable<InstructorSchedule> GetInstructorSchedule();
+        IEnumerable<InstructorSchedule> GetInstructorScheduleByScheduleId(int ScheduleId);
+        IEnumerable<InstructorSchedule> GetAssistantScheduleByScheduleId(int ScheduleId);
       ////  Task<InstructorSchedule> CreateInstructorScheduleAsync(InstructorSchedule instructorSchedule);
         //Task<InstructorSchedule> UpdateInstructorScheduleAsync(InstructorSchedule instructorSchedule);
         //Task<InstructorSchedule> DeleteInstructorScheduleAsync(int id);

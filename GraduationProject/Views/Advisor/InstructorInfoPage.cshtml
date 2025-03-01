@@ -1,5 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Instructor Info";
+    var places = ViewData["Places"] as IEnumerable<Place>;
+    var instructors = ViewData["Instructors"] as IEnumerable<FacultyMember>;
+    var courses = ViewData["Courses"] as IEnumerable<Course>;
 }
 
 <div class="advisor">
@@ -10,90 +13,110 @@
             </a>
         </div>
         <h1 class="heading text-center m-1">Enter Instructor Schedule</h1><br>
-        <div class="input-box">
-            <p><strong>Instructor:</strong></p> <input type="text" class="input-box" id="text">
+        <div class="mb-3">
+            <label for="InstructorId" class="form-label">Instructor</label>
+            <select name="InstructorId" id="InstructorId" class="form-control">
+                <option value="">Select Instructor</option>
+                @foreach(var i in instructors){
+                    <option value="@i.Id">@i.FirstName @i.MiddleName @i.LastName</option>
+                }
+                
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="Role" class="form-label">Role</label>
+            <select id="Role" class="form-control">
+                <option value="Instructor">Instructor</option>
+                <option value="Assistant">Assistant</option>
+            </select>
         </div>
         <br>
-        <form id="schedule-form">
-            <div class="schedule">
-                <p id="Saturday" class="day fs-5 fw-bold">Saturday</p>
-                <table class="table scheduleTable" id="scheduleTable">
-                    <thead>
-                        <tr class="table-secondary">
-                            <th>Day</th>
-                            <th>Course Code</th>
-                            <th>Course Name</th>
-                            <th>Type</th>
-                            <th>Place</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <select class="input-schedule code_co" name="code-Saturday">
-                                    <option value="Saturday">Saturday </option>
-                                    <option value="Sunday">Sunday </option>
-                                    <option value="Monday">Monday </option>
-                                    <option value="Tuesday">Tuesday </option>
-                                    <option value="Wednesday">Wednesday </option>
-                                    <option value="Thursday">Thursday </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="input-schedule title" name="course-Saturday"></select>
-                            </td>
-                            <td>
-                                <input type="text" class="input-schedule" name="instructor-Saturday"
-                                       placeholder="Instructor">
-                            </td>
-                            <td>
-                                <select name="Place-Saturday" class="input-schedule" id="Type">
-                                    <option value="Ex">Ex</option>
-                                    <option value="Ex/Lab">Ex/Lab</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="text" class="input-schedule" name="place-Saturday" placeholder="Place">
-                            </td>
+        <span id="warningMessage" class="text-danger fw-bold fs-5"></span> <!-- Alert Span -->
+        <br />
+        <form asp-action="SaveSchedule" method="post" id="schedule-form">
+            <table class="table table-bordered" id="scheduleTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Day</th>
+                        <th>Course</th>
+                        <th>Place</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="scheduleBody">
+                    <tr>
+                        <td>
+                            <select name="Days[]" class="form-control">
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="CourseIds[]" class="form-control">
+                                <option value="">Select Course</option>
+                                @foreach(var c in courses) {
+                                    <option value="@c.Code">@c.Name</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <select name="PlaceIds[]" class="form-control">
+                                <option value="">Select Place</option>
+                            @foreach (var c in places)
+                            {
+                                    <option value="@c.Id">@c.Name</option>
+                            }
+                            </select>
+                        </td>
+                        <td>
+                            <select name="TimeBegins[]" class="timeBegin form-control">
+                                <option value="09:00:00.0000000">09:00</option>
+                                <option value="10:20:00.0000000">10:20</option>
+                                <option value="11:40:00.0000000">11:40</option>
+                                <option value="13:00:00.0000000">13:00</option>
+                                <option value="14:20:00.0000000">14:20</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="TimeEnds[]" class="timeEnd form-control">
+                                <option value="10:15:00.0000000">10:15</option>
+                                <option value="11:35:00.0000000">11:35</option>
+                                <option value="12:55:00.0000000">12:55</option>
+                                <option value="14:15:00.0000000">14:15</option>
+                                <option value="15:35:00.0000000">15:35</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                            <td>
-                                <select name="timebegin-Saturday" class="input-schedule">
-                                    <option value="1">09:00 </option>
-                                    <option value="2">10:20 </option>
-                                    <option value="3">11:40 </option>
-                                    <option value="4">13:00 </option>
-                                    <option value="5">14:20 </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select name="timeend-Saturday" class="input-schedule">
-                                    <option value="1"> 10:15</option>
-                                    <option value="2"> 11:35</option>
-                                    <option value="3"> 12:55</option>
-                                    <option value="4"> 14:15</option>
-                                    <option value="5"> 15:35</option>
-                                </select>
-                            </td>
-                            <td class="plus">
-                                <button onclick="addRow('Saturday')" class="btn">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <button type="button" class="btn btn-success" onclick="addRow()">
+                <i class="fa-solid fa-plus"></i> Add Row
+            </button>
 
-                </table>
-            </div>
-            <br>
-            <input class="btn btn-primary m-auto d-block w-25 fs-5" type="submit" value="Submit">
+            <br><br>
+            
+            <button type="submit" class="btn btn-primary">Save Schedule</button>
         </form>
+        
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/js/advisor.js"></script>
+    <script id="coursesData" type="application/json">@Json.Serialize(ViewData["Coursess"])</script>
+    <script id="placesData" type="application/json">@Json.Serialize(ViewData["Placess"])</script>
+
+    <script src="~/js/advisorinst.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }

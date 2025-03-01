@@ -24,9 +24,11 @@ namespace GP.BLL.Repositories
             return  _dbContext.SaveChanges();
         }
 
-        public int DeleteDepartment(int departmentId)
+        public async Task<int> DeleteDepartmentAsync(int Id)
         {
-            _dbContext.Remove(departmentId);
+            
+            var dep = await GetDepartmentById(Id);
+            _dbContext.Remove(dep);
             return _dbContext.SaveChanges();
         }
 

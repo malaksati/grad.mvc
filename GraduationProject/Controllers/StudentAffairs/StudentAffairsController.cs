@@ -7,12 +7,7 @@ namespace GraduationProject.Controllers.StudentAffairs
     [Authorize(Roles = "StudentAffairs")]
     public class StudentAffairsController : Controller
     {
-        private readonly AppDbContext context;
-
-        public StudentAffairsController(AppDbContext _context)
-        {
-            _context = context; // Dependency Injection
-        }
+        
         [HttpGet]
         public IActionResult NewApplication()
         {

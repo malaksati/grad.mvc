@@ -32,7 +32,7 @@ namespace GraduationProject.Controllers.Course
         }
         public IActionResult Delete(string code)
         {
-            _courseRepository.DeleteCourse(code);
+            _courseRepository.DeleteCourseAsync(code);
             return RedirectToAction("Dashboard", "Admin");
         }
     }

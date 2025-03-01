@@ -10,9 +10,9 @@ namespace GP.BLL.Interfaces
     public interface ICollegeRepository
     {
         IEnumerable<College> GetColleges();
-        Task<College> GetCollegeById(int id);
+        Task<College> GetCollegeById(int Id);
         int AddCollege(College college);
         int UpdateCollege(College college);
-        int DeleteCollege(int college);
+        Task<int> DeleteCollegeAsync(int Id);
     }
 }

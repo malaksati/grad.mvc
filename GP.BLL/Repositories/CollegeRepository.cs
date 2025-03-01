@@ -23,9 +23,9 @@ namespace GP.BLL.Repositories
             var result = _dbContext.Colleges.AsNoTracking().ToList();
             return result;
         }
-        public async Task<College> GetCollegeById(int id)
+        public async Task<College> GetCollegeById(int Id)
         {
-            var college = await _dbContext.Colleges.FindAsync(id);//// find op search in cache if found return it else search in database
+            var college = await _dbContext.Colleges.FindAsync(Id);//// find op search in cache if found return it else search in database
             return college;
         }
         public int AddCollege(College college)
@@ -38,9 +38,9 @@ namespace GP.BLL.Repositories
             _dbContext.Colleges.Update(college);
             return _dbContext.SaveChanges();
         }
-        public int DeleteCollege(int collegeid)
-        {
-            _dbContext.Remove(collegeid);
+        public async Task<int> DeleteCollegeAsync(int Id) { 
+            var college = await GetCollegeById(Id);
+            _dbContext.Remove(college);
             return _dbContext.SaveChanges();
         }
     }

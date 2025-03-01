@@ -1,90 +1,47 @@
-﻿  @{  
-  	ViewData["Title"] = "Instructor Schedule";  
-  }  
-  @model IEnumerable<InstructorSchedule>  
+﻿@{
+    ViewData["Title"] = "Instructor Schedule";
+    var schedule = ViewData["Schedule"] as IEnumerable<InstructorSchedule>;
+}  
 
-  @if(Model.Count()>0){  
   <div class="container mt-4 doctor-schedule schedule-s">  
       <div class="table-container">  
           <div class="header-section">  
               <div>  
                   <h5>Ministry of Higher Education</h5>  
                   <h6>Modern University for Technology and Information</h6>  
-                  <h6>Faculty of Computers and Artificial Intelligence</h6>  
-                  <p>Semester: Fall 2024</p>  
-              </div>  
+                  <h6>Faculty of Computers and Artificial Intelligence</h6>
+                <p class="p-0 fs-5 fw-bold semester">Semester : @schedule?.FirstOrDefault().Semester @schedule?.FirstOrDefault().AcademicYear</p>
+            </div>  
               <div>  
                   <img src="~/images/Mti(Gray).png" alt="MTI Logo" width="150">  
               </div>  
           </div>  
-          <h5 class="text-center">Instructor Timetable</h5>  
-          <p><strong>Instructor:</strong> Dr. Hesham ElDeeb</p>  
-          <table class="table table-bordered text-center">  
+          <h5 class="text-center">Instructor Timetable</h5>
+        <p><strong>Instructor:</strong> @schedule?.FirstOrDefault().Instructor.FirstName @schedule?.FirstOrDefault().Instructor.MiddleName @schedule?.FirstOrDefault().Instructor.LastName</p>
+        <table class="table table-bordered text-center">  
               <thead class="table-dark">  
                   <tr>  
-                     @* <th>@Html.DisplayFor(i=>i.day)</th>    *@
-  				
-  					 <th>Odd Time</th>   
-  					 <th>Even Time</th>  
+                     <th>Day</th>
+                     <th>Course Code</th>
+                     <th>Course Name</th>
+                     <th>Place</th>
+                     <th>Type</th>
+  					 <th>Time</th> 
                    
                   </tr>  
               </thead>  
               <tbody>  
-               
-                  <tr>  
-                      <td>Sunday</td>  
-                      <td>CS 432</td>  
-                      <td>Software Engineering II</td>  
-                      <td>L</td>  
-                      <td>L3</td>  
-                      <td>13:00 - 14:15</td>  
-                      <td>13:00 - 14:15</td>  
-                  </tr>  
-                  <tr>  
-                      <td>Sunday</td>  
-                      <td>CS 432</td>  
-                      <td>Software Engineering II</td>  
-                      <td>L</td>  
-                      <td>L3</td>  
-                      <td>14:20 - 15:35</td>  
-                      <td>14:20 - 15:35</td>  
-                  </tr>  
-                  <tr>  
-                      <td>Monday</td>  
-                      <td>CS 321</td>  
-                      <td>Computer Architecture</td>  
-                      <td>L</td>  
-                      <td>L3</td>  
-                      <td>09:00 - 10:15</td>  
-                      <td>09:00 - 10:15</td>  
-                  </tr>  
-                  <tr>  
-                      <td>Tuesday</td>  
-                      <td>CS 321</td>  
-                      <td>Computer Architecture</td>  
-                      <td>L</td>  
-                      <td>L3</td>  
-                      <td>09:00 - 10:15</td>  
-                      <td>09:00 - 10:15</td>  
-                  </tr>  
-                  <tr>  
-                      <td>Thursday</td>  
-                      <td>CS 413</td>  
-                      <td>Computer Graphics</td>  
-                      <td>L</td>  
-                      <td>L3</td>  
-                      <td>09:00 - 10:15</td>  
-                      <td>09:00 - 10:15</td>  
-                  </tr>  
-                  <tr>  
-                      <td>Thursday</td>  
-                      <td>CS 413</td>  
-                      <td>Computer Graphics</td>  
-                      <td>L</td>  
-                      <td>L3</td>  
-                      <td>10:20 - 11:35</td>  
-                      <td>10:20 - 11:35</td>  
-                  </tr>  
+               @foreach(var day in schedule){
+                    <tr>
+                        <td>@day.Day</td>
+                        <td>@day.CourseCode</td>
+                        <td>@day.Course?.Name</td>
+                        <td>@day.Place?.Name</td>
+                        <td>@day.Place?.Type</td>
+                        <td>@day.TimeBegin.ToString(@"hh\:mm") - @day.TimeEnd.ToString(@"hh\:mm")</td>
+                    </tr>
+                }
+                    
               </tbody>  
           </table>  
 

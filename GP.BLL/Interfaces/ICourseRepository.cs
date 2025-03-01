@@ -1,4 +1,5 @@
-﻿using GP.DAL.Models;
+﻿using GP.DAL.Dto;
+using GP.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,10 @@ namespace GP.BLL.Interfaces
     public interface ICourseRepository
     {
         IEnumerable<Course> GetCourses();
+        IEnumerable<CourseDTO> GetCoursesNameCode();
         Task<Course> GetCourseById(string id);
         int AddCourse(Course course);
         int UpdateCourse(Course course);
-        int DeleteCourse(string courseId);
+        Task<int> DeleteCourseAsync(string Code);
     }
 }
