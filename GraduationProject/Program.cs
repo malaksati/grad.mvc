@@ -84,8 +84,6 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.SeedInstructorSchedules(dbContext, env);
     DbInitializer.SeedStudentSchedules(dbContext, env);
     DbInitializer.SeedFollowUpSchedules(dbContext, env);
-    await DbInitializer.SeedRoles(services);
-    //await DbInitializer.SeedUsers(services);
 
 }
 #endregion
